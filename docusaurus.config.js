@@ -19,18 +19,8 @@ module.exports = {
     },
     footer: {
       style: "dark",
-      links: [
-        {
-          title: "Documentation",
-          items: [
-            {
-              label: "Specification",
-              to: "docs/specification"
-            }
-          ]
-        }
-      ],
-      copyright: `Built with Docusaurus.`
+      links: [],
+      copyright: "Built with <2 from the VIA team."
     }
   },
   presets: [
