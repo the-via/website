@@ -18,7 +18,7 @@ const features = [
     title: <>Comprehensive</>,
     description: (
       <>
-        You can configure your keyboard, test it after building and design your
+        You can configure your keyboard, test it after building, and design your
         future pcb all in the same application. VIA is the last application
         you'll need for your keyboard.
       </>
