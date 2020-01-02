@@ -6,7 +6,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from "./styles.module.css";
 import Head from "@docusaurus/Head";
-
+const keyboardNames = require("../keyboard-names.json");
 const features = [
   {
     title: <>Simple</>,
@@ -50,6 +50,27 @@ function Feature({ imageUrl, title, description }) {
   );
 }
 
+function RotaryDisplay(props) {
+  const [position, setPosition] = React.useState(0);
+  setTimeout(() => {
+    setPosition(position => (position + 15) % (props.items.length * 15));
+  }, 1000);
+  return (
+    <div className={styles.displayContainer}>
+      <ul
+        className={styles.rotaryList}
+        style={{
+          transform: `translate3d(0,${-position}px,0)`
+        }}
+      >
+        {props.items.map(item => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
@@ -68,6 +89,7 @@ function Home() {
           <div className="container">
             <h1 className="hero__title">{siteConfig.title}</h1>
             <p className="hero__subtitle">{siteConfig.tagline}</p>
+            <RotaryDisplay items={keyboardNames} />
             <div className={styles.buttons}>
               <Link
                 className={classnames(

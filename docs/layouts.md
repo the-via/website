@@ -18,11 +18,11 @@ Keyboard Layout Editor will not load the `<keyboard_name>.json` that VIA uses, o
 
 The KLE JSON should follow these rules:
 
- *  Horizontal and vertical gaps are allowed (for separation of rows, columns, blockers, etc.)
- *  Do not use stepped keys.
- *  Rotated keys are allowed but layout options for rotated keys is not supported.
- *  Use key color `#cccccc` for alphas, `#aaaaaa` for modifier keys and `#777777` for accents (i.e. Esc, Enter, arrows, etc).
- *  Use legend color `#000000` for all legends
+- Horizontal and vertical gaps are allowed (for separation of rows, columns, blockers, etc.)
+- Do not use stepped keys.
+- Rotated keys are allowed but layout options for rotated keys is not supported.
+- Use key color `#cccccc` for alphas, `#aaaaaa` for modifier keys and `#777777` for accents (i.e. Esc, Enter, arrows, etc).
+- Use legend color `#000000` for all legends
 
 ## Switch Matrix Co-ordinates
 
@@ -34,17 +34,17 @@ Most `LAYOUT_*()` macros in QMK use some `row,col` naming convention so translat
 
 KLE Example:
 
-![Switch Matrix Co-ordinates](../static/img/switch_matrix_coordinates.png)
+![Switch Matrix Co-ordinates](/img/switch_matrix_coordinates.png)
 
 QMK Layout Macro Example:
 
-```
+```c
 #define LAYOUT_60_all( \
     K00, K01, K02, K03, K04, ...
     K10, K11, K12, K13, K14, ...
     K20, K21, K22, K23, K24, ...
     ...
-   
+
 ```
 
 ## Layout Options
@@ -63,7 +63,7 @@ The "default layout" (what is presented in VIA by default) is defined as all key
 
 Layout option choices must all have the same coverage, i.e. they overlap exactly in shape, but can vary in keycap sizes and arrangement. Layout option choices must be aligned either vertically or horizontally with the "default" layout option. They must all contain the switch matrix co-ordinates in the top-left label. Note that setting the switch matrix co-ordinates may require testing real hardware. For example, the non-split (center) switch of a split shift or backspace may be connected in parallel to the switch to the left or right. One can put different keycodes in a split key scenarion and test which keycode event is sent when the center switch is pressed or shorted.
 
-Layout options should be at the finest granularity possible. For example, ANSI/ISO should be defined as three separate layout options, ANSI/ISO Enter, Split Left Shift, Split Right Shift. 
+Layout options should be at the finest granularity possible. For example, ANSI/ISO should be defined as three separate layout options, ANSI/ISO Enter, Split Left Shift, Split Right Shift.
 
 Layout options can use "decal" keys to represent optional blockers, i.e. HHKB or WKL.
 
@@ -71,28 +71,29 @@ VIA will present the layout options to the user, and store the state of the choi
 
 Example:
 
-![Split Backspace](../static/img/split_backspace.png)
+![Split Backspace](/img/split_backspace.png)
 
 This example defines the layout option "Split Backspace".
 
 It shows:
 
-  * the 2U backspace legend is `0,0` meaning it belongs to layout option #0, layout option choice #0
-  * the 2U backspace is the default (because it is `-,0`)
-  * the 2U backspace is positioned as it should be relative to other keys that are constant, *because it is the default*.
-  * the split backspace keys have legends `0,1` meaning they belong to layout option #0, layout option choice #1
-  * the split backspace keys have the same bounding box (i.e. cover the same area) as the 2U backspace
-  * the split backspace keys bounding box is aligned vertically with the 2U backspace
-  * all keys have switch matrix coordinates in the top-left legends
+- the 2U backspace legend is `0,0` meaning it belongs to layout option #0, layout option choice #0
+- the 2U backspace is the default (because it is `-,0`)
+- the 2U backspace is positioned as it should be relative to other keys that are constant, _because it is the default_.
+- the split backspace keys have legends `0,1` meaning they belong to layout option #0, layout option choice #1
+- the split backspace keys have the same bounding box (i.e. cover the same area) as the 2U backspace
+- the split backspace keys bounding box is aligned vertically with the 2U backspace
+- all keys have switch matrix coordinates in the top-left legends
 
 Let's consider another example, the WT60-D layout:
 
-![WT60-D Layout Options](../static/img/wt60_d_layout_options.png)
+![WT60-D Layout Options](/img/wt60_d_layout_options.png)
 
 This shows split backspace as the first of many layout options, and some other possibilities, such as:
-  * aligning layout option choices to the left, right and below the "default layout"
-  * layout options with more than two choices
-  * layout options incorporating "blockers" (keys with `Decal` checked)
+
+- aligning layout option choices to the left, right and below the "default layout"
+- layout options with more than two choices
+- layout options incorporating "blockers" (keys with `Decal` checked)
 
 ## Layout Option Labels
 

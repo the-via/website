@@ -33,3 +33,54 @@
   height: 200px;
   width: 200px;
 }
+
+.rotaryList {
+  background-color: peachpuff;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ifm-color-primary);
+  position: relative;
+  transition: all 0.4s ease-out;
+}
+
+.rotaryList li {
+  height: 30px;
+  line-height: 30px;
+}
+
+.displayContainer {
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.displayContainer::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 30px;
+  background: -moz-linear-gradient(
+    top,
+    rgba(173, 112, 112, 1) 0%,
+    rgba(173, 112, 112, 0) 51%,
+    rgba(173, 112, 112, 1) 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    rgba(173, 112, 112, 1) 0%,
+    rgba(173, 112, 112, 0) 51%,
+    rgba(173, 112, 112, 1) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    rgba(173, 112, 112, 1) 0%,
+    rgba(173, 112, 112, 0) 51%,
+    rgba(173, 112, 112, 1) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad7070', endColorstr='#ad7070',GradientType=0 ); /* IE6-9 */
+}
