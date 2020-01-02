@@ -75,7 +75,6 @@ The `supportedBacklightValues` property is an array of all backlight commands su
   ...
   "layouts": {
     ...
-    "presets": {"HHKB": [1, 0, 0, 1, 2]},
     "labels": [
       "Split Backspace",
       "ISO",
