@@ -1,7 +1,7 @@
 ---
 id: advanced
-title: Advanced Sample
-sidebar_label: Advanced Sample
+title: Advanced
+sidebar_label: Advanced
 ---
 
 ## M6-B
@@ -45,7 +45,7 @@ sidebar_label: Advanced Sample
       21
     ]
   },
-  "matrix": {"rows": 1, "cols": 6},
+  "matrix": { "rows": 1, "cols": 6 },
   "layouts": {
     "keymap": [
       ["0,0", "0,1", "0,2"],

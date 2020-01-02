@@ -1,7 +1,7 @@
 ---
 id: simple
-title: Simple Sample
-sidebar_label: Simple Sample
+title: Simple
+sidebar_label: Simple
 ---
 
 ## M6-A
@@ -12,7 +12,7 @@ sidebar_label: Simple Sample
   "vendorId": "0x5241",
   "productId": "0x006a",
   "lighting": "none",
-  "matrix": {"rows": 1, "cols": 6},
+  "matrix": { "rows": 1, "cols": 6 },
   "layouts": {
     "keymap": [
       ["0,0", "0,1", "0,2"],

@@ -64,6 +64,7 @@ The `matrix` property defines how many rows and columns the pcb switch matrix us
       [{"c": "#505557", "t": "#d9d7d7", "a": 7}, "0,0", "0,1", "0,2"],
       ["0,3", "0,4", "0,5"]
     ]
+    ...
   }
   ...
 }
