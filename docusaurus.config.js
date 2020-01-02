@@ -19,18 +19,8 @@ module.exports = {
     },
     footer: {
       style: "dark",
-      links: [
-        {
-          title: "Documentation",
-          items: [
-            {
-              label: "Specification",
-              to: "docs/specification"
-            }
-          ]
-        }
-      ],
-      copyright: `Built with Docusaurus.`
+      links: [],
+      copyright: "Built with <2 from the VIA team."
     }
   },
   presets: [
@@ -38,8 +28,7 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/facebook/docusaurus/edit/master/website/"
+          sidebarPath: require.resolve("./sidebars.js")
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css")

@@ -28,8 +28,8 @@ The object must contain the `extends` key which contains one of the preset names
     "effects": [
       ["Solid Color 1", 1],
       ["Cycle All", 0]
-    ...
     ],
+    ...
   },
   ...
 }
