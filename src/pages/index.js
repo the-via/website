@@ -53,11 +53,12 @@ function Feature({ imageUrl, title, description }) {
 function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
+  const seoURL = "https://caniusevia.com/img/icon.png";
   return (
     <>
       <Head>
-        <meta property="og:image" content="img/icon.png" />
-        <meta property="twitter:image" content="img/icon.png" />
+        <meta property="og:image" content={seoURL} />
+        <meta property="twitter:image" content={seoURL} />
       </Head>
       <Layout
         title={`${siteConfig.title}`}
