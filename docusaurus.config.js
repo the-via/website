@@ -4,11 +4,11 @@ module.exports = {
   url: "https://caniusevia.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
-  twitterImage: "img/icon.png",
-  ogImage: "img/icon.png",
   organizationName: "the-via", // Usually your GitHub org/user name.
   projectName: "keyboards", // Usually your repo name.
   themeConfig: {
+    twitterImage: "img/icon.png",
+    ogImage: "img/icon.png",
     navbar: {
       title: "VIA",
       logo: {
