@@ -11,7 +11,8 @@ sidebar_label: Supported Keyboards
 | AEboards Ext65              |
 | Snagpad                     |
 | PLAIN60                     |
-| Noxary 268.2                |
+| Noxary 268.2
+| Noxary 280
 | PRIME_E                     |
 | RAMA WORKS M6-A             |
 | RAMA WORKS M6-B             |
