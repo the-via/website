@@ -17,6 +17,11 @@ module.exports = {
       },
       links: [
         {
+          href: "https://github.com/the-via/releases/releases/latest",
+          label: "Download",
+          position: "left"
+        },
+        {
           to: "docs/supported_keyboards",
           label: "Supported Keyboards",
           position: "left"
