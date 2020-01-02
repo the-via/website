@@ -16,6 +16,15 @@
   }
 }
 
+:global(.hero__title) {
+  font-weight: 400;
+  font-size: 5rem !important;
+}
+
+:global(.hero__title) span {
+  font-style: oblique;
+}
+
 .buttons {
   display: flex;
   align-items: center;
