@@ -30,6 +30,12 @@
 }
 
 .featureImage {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 175px;
+}
+
+.featureButton {
+  display: flex;
+  justify-content: left;
+  margin-bottom: calc(var(--ifm-paragraph-margin-bottom) * 1.5);
 }
