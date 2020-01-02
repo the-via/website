@@ -36,6 +36,6 @@
 
 .featureButton {
   display: flex;
-  justify-content: left;
+  justify-content: center;
   margin-bottom: calc(var(--ifm-paragraph-margin-bottom) * 1.5);
 }
