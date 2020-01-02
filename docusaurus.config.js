@@ -28,8 +28,7 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/facebook/docusaurus/edit/master/website/"
+          sidebarPath: require.resolve("./sidebars.js")
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css")
