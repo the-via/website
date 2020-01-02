@@ -7,7 +7,7 @@
 
 module.exports = {
   someSidebar: {
-    Specification: ['specification', 'optional'],
-    Examples: ['simple', 'advanced']
+    Specification: ["specification", "optional", "configuring_qmk"],
+    Examples: ["simple", "advanced"]
   }
 };
