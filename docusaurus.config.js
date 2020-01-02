@@ -21,7 +21,7 @@ module.exports = {
           label: "Supported Keyboards",
           position: "left"
         },
-        { to: "docs/specification", label: "Documentation", position: "left" }
+        { to: "docs/specification", label: "Docs", position: "left" }
       ]
     },
     footer: {
