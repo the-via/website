@@ -6,13 +6,12 @@ sidebar_label: Configuring QMK
 
 ## Overview
 
+![Docusaurus with Keytar](/img/icon.png)
 VIA works by communicating with the firmware that is running on the device and sending it commands across USB. Enabling the VIA feature in QMK is enabling both the ability to communicate with the VIA Configurator and the ability to store keymaps and other settings.
 
- * Create a `via` keymap directory and files within to make a VIA enabled firmware different to the default
- * Make changes to the keyboard's `config.h` and `rules.mk` to make the firmware compatible
+- Create a `via` keymap directory and files within to make a VIA enabled firmware different to the default
+- Make changes to the keyboard's `config.h` and `rules.mk` to make the firmware compatible
 
-
-  
 ## Create a `via` Keymap Directory and Files in QMK Source
 
 In order to allow VIA compatible firmware to be a separate QMK build target from the default, create a `via` keymap directory e.g. `keyboards/<keyboardname>/keymaps/via`
@@ -30,12 +29,13 @@ Note: ‘bootmagic lite’ is highly recommended to the point of being essential
 The keyboard’s own `rules.mk` should be compatible with the VIA-specific firmware and so nothing else is needed.
 
 Currently, VIA is incompatible with features that change the integer values of `enum quantum_keycodes`, i.e. that optionally add enum values to `enum quantum_keycodes` and change the sequential assignment of integer values to enum names. As such, the following features must be disabled for VIA support, until this issue is fixed (i.e. a refactor of `enum quantum_keycodes`):
- * LEADER_ENABLE
- * FAUXCLICKY_ENABLE
- * MIDI_ENABLE
- * BLUETOOTH_ENABLE
- * KEY_LOCK_ENABLE
- * TERMINAL_ENABLE
+
+- LEADER_ENABLE
+- FAUXCLICKY_ENABLE
+- MIDI_ENABLE
+- BLUETOOTH_ENABLE
+- KEY_LOCK_ENABLE
+- TERMINAL_ENABLE
 
 ## Create a `keymap.c` in `keyboards/<keyboardname>/keymaps/via`
 
@@ -50,7 +50,7 @@ There typically is no need to use a `config.h` in the `via` keymap directory. An
 
 In order to make VIA support not enabled by default (i.e. so dynamic keymaps is not enabled for QMK Configurator builds, or power users’ compiled QMK firmware), do not put `VIA_ENABLE = yes` in the keyboard directory’s `rules.mk`. Instead, only put this in the `via` keymap directory’s `rules.mk`
 
-You may want to consider enabling bootmagic lite (i.e. change to `BOOTMAGIC_ENABLE = lite`). This will automatically be enabled for VIA-enabled builds, but it is useful for VIA-disabled builds so that the device can be switched into bootloader mode without requiring a `RESET` keycode or pressing the reset button on the PCB. 
+You may want to consider enabling bootmagic lite (i.e. change to `BOOTMAGIC_ENABLE = lite`). This will automatically be enabled for VIA-enabled builds, but it is useful for VIA-disabled builds so that the device can be switched into bootloader mode without requiring a `RESET` keycode or pressing the reset button on the PCB.
 
 You may want to consider turning on link time optimization `LINK_TIME_OPTIMIZATION_ENABLE = yes` to reduce firmware size.
 
@@ -65,11 +65,11 @@ There is a high probability that these values are the defaults from the QMK new 
     #define VENDOR_ID 0xFEED
     #define PRODUCT_ID 0x0000
 
-VIA Configurator uses these to identify the device, so they must be unique to the device. 
+VIA Configurator uses these to identify the device, so they must be unique to the device.
 
 Note that multiple versions/revisions of a keyboard PCB can use the same vendor/product if they function the same from VIA Configurator’s point of view, i.e. they have the same (or compatible) physical key layout and switch matrix topology and the same “layout macro” (mapping physical key layout to switch matrix layout) is used. VIA Configurator doesn’t care which I/O pins are being used, it just reads/writes keycodes to the dynamic keymaps stored in switch matrix addressing. As such, please consider carefully whether you actually need to create more than one vendor/product ID pair for multiple versions of the same keyboard PCB.
 
-It is recommended to choose a value of `VENDOR_ID` that unique to the keyboard PCB’s designer/vendor, i.e. it will be the same for all keyboards with a common parent directory. 
+It is recommended to choose a value of `VENDOR_ID` that unique to the keyboard PCB’s designer/vendor, i.e. it will be the same for all keyboards with a common parent directory.
 
 For example, keyboards in `/keyboards/wilba_tech` use:
 
@@ -125,10 +125,10 @@ However, if you are doing something advanced and require changing VIA’s settin
 
 When VIA is enabled, EEPROM memory is assigned as:
 
- * QMK Core 
- * VIA (`VIA_EEPROM_MAGIC_ADDR` to `VIA_EEPROM_CUSTOM_CONFIG_ADDR-1`)
- * Custom Config (`VIA_EEPROM_CUSTOM_CONFIG_ADDR` to `VIA_EEPROM_CUSTOM_CONFIG_ADDR+VIA_EEPROM_CUSTOM_CONFIG_SIZE-1`)
- * Dynamic Keymaps (`DYNAMIC_KEYMAP_EEPROM_ADDR` to `DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR-1`)
- * Macros (`DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR` to `DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR+DYNAMIC_KEYMAP_MACRO_EEPROM_SIZE-1`)
+- QMK Core
+- VIA (`VIA_EEPROM_MAGIC_ADDR` to `VIA_EEPROM_CUSTOM_CONFIG_ADDR-1`)
+- Custom Config (`VIA_EEPROM_CUSTOM_CONFIG_ADDR` to `VIA_EEPROM_CUSTOM_CONFIG_ADDR+VIA_EEPROM_CUSTOM_CONFIG_SIZE-1`)
+- Dynamic Keymaps (`DYNAMIC_KEYMAP_EEPROM_ADDR` to `DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR-1`)
+- Macros (`DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR` to `DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR+DYNAMIC_KEYMAP_MACRO_EEPROM_SIZE-1`)
 
 Unless a keyboard is implementing it's own storage of state, there is no need to set anything, by enabling VIA, the defaults are set to use EEPROM memory as above. By default, dynamic keymaps are configured to use 4 layers, and the remaining EEPROM memory (up to 1K) is used for macros.
