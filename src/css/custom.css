@@ -14,6 +14,7 @@
   --ifm-color-primary-lighter: #cc8484;
   --ifm-color-primary-lightest: #d18787;
   --ifm-code-font-size: 95%;
+  --ifm-footer-padding-vertical: 0.5rem;
 }
 
 .docusaurus-highlight-code-line {
