@@ -1,6 +1,6 @@
 module.exports = {
   title: "VIA",
-  tagline: "Customization made trivial",
+  tagline: "Your keyboard's best friend",
   url: "https://caniusevia.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",

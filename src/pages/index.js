@@ -9,15 +9,15 @@ import Head from "@docusaurus/Head";
 
 const features = [
   {
-    title: <>Clean</>,
-    imageUrl: "img/keyboard.png",
+    title: <>Simple</>,
+    imageUrl: "img/undraw_walking_around.svg",
     description: <>Download, install, plug in your keyboard. It's that easy.</>,
     callToAction: "Download VIA",
     callToActionUrl: "https://www.github.com/the-via/releases/releases/latest"
   },
   {
-    title: <>Compatible</>,
-    imageUrl: "img/overlap.png",
+    title: <>Friendly</>,
+    imageUrl: "img/undraw_different_love.svg",
     description: (
       <>
         Compatible with over over 40 keyboards and easily added to other QMK
@@ -28,15 +28,15 @@ const features = [
     callToActionUrl: "/"
   },
   {
-    title: <>Comprehensive</>,
-    imageUrl: "img/galaxy.png",
+    title: <>Helpful</>,
+    imageUrl: "img/undraw_game_world.svg",
     description: (
       <>
         Configure, test and design in one place - VIA is the last application
         you'll need for your keyboard.
       </>
     ),
-    callToAction: "Read the doco",
+    callToAction: "Read the docs",
     callToActionUrl: "/docs/specification"
   }
 ];
@@ -86,7 +86,7 @@ function Home() {
       </Head>
       <Layout
         title={`${siteConfig.title}`}
-        description="Customization made trivial"
+        description="Your keyboard's best friend"
       >
         <header className={classnames("hero hero--primary", styles.heroBanner)}>
           <div className="container">
