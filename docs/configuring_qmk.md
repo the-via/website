@@ -6,7 +6,6 @@ sidebar_label: Configuring QMK
 
 ## Overview
 
-![Docusaurus with Keytar](/img/icon.png)
 VIA works by communicating with the firmware that is running on the device and sending it commands across USB. Enabling the VIA feature in QMK is enabling both the ability to communicate with the VIA Configurator and the ability to store keymaps and other settings.
 
 - Create a `via` keymap directory and files within to make a VIA enabled firmware different to the default
