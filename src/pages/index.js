@@ -25,7 +25,7 @@ const features = [
       </>
     ),
     callToAction: "Check compatibility",
-    callToActionUrl: "/"
+    callToActionUrl: "/docs/supported_keyboards"
   },
   {
     title: <>Helpful</>,

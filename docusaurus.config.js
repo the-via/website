@@ -16,6 +16,11 @@ module.exports = {
         src: "img/icon.png"
       },
       links: [
+        {
+          to: "docs/supported_keyboards",
+          label: "Supported Keyboards",
+          position: "left"
+        },
         { to: "docs/specification", label: "Documentation", position: "left" }
       ]
     },
