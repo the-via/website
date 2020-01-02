@@ -34,7 +34,7 @@ Most `LAYOUT_*()` macros in QMK use some `row,col` naming convention so translat
 
 KLE Example:
 
-![Switch Matrix Co-ordinates](../static/img/switch_matrix_coordinates.png)
+![Switch Matrix Co-ordinates](/img/switch_matrix_coordinates.png)
 
 QMK Layout Macro Example:
 
@@ -71,7 +71,7 @@ VIA will present the layout options to the user, and store the state of the choi
 
 Example:
 
-![Split Backspace](../static/img/split_backspace.png)
+![Split Backspace](/img/split_backspace.png)
 
 This example defines the layout option "Split Backspace".
 
@@ -87,7 +87,7 @@ It shows:
 
 Let's consider another example, the WT60-D layout:
 
-![WT60-D Layout Options](../static/img/wt60_d_layout_options.png)
+![WT60-D Layout Options](/img/wt60_d_layout_options.png)
 
 This shows split backspace as the first of many layout options, and some other possibilities, such as:
   * aligning layout option choices to the left, right and below the "default layout"
