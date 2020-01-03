@@ -21,6 +21,9 @@ sidebar_label: Supported Keyboards
 | RAMA WORKS M65-B            |
 | RAMA WORKS U80-A            |
 | RAMA WORKS KOYU             |
+| H87A                        |
+| H88                         |
+| HBCP                        |
 | Romac                       |
 | OSA                         |
 | Uni660                      |
