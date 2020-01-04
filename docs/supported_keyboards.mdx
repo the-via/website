@@ -4,6 +4,24 @@ title: Supported Keyboards
 sidebar_label: Supported Keyboards
 ---
 
+import * as fileDownload from "js-file-download";
+export const DownloadAsFile = ({ url, filename }) => {
+  const download = () =>
+    fetch(url)
+      .then(response => response.text())
+      .then(text => fileDownload(text, filename));
+  return (
+    <a href="#" onClick={download}>
+      click me
+    </a>
+  );
+};
+
+<DownloadAsFile
+  url="https://raw.githubusercontent.com/the-via/firmware/master/aeboards_aegis_via.hex"
+  filename="test.hex"
+></DownloadAsFile>
+
 | Compatible as of 01/01/2020 |
 | --------------------------- |
 | Aanzee                      |
