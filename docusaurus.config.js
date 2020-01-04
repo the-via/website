@@ -26,7 +26,8 @@ module.exports = {
           label: "Supported Keyboards",
           position: "left"
         },
-        { to: "docs/specification", label: "Docs", position: "left" }
+        { to: "docs/specification", label: "Docs", position: "left" },
+        { to: "docs/download_firmware", label: "Firmware", position: "left" }
       ]
     },
     footer: {
