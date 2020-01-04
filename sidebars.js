@@ -9,6 +9,6 @@ module.exports = {
   someSidebar: {
     Specification: ["specification", "optional", "configuring_qmk", "layouts"],
     Examples: ["simple", "advanced"],
-    Appendix: ["supported_keyboards"]
+    Appendix: ["supported_keyboards", "download_firmware"]
   }
 };
