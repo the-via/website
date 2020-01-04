@@ -131,7 +131,7 @@ function Home() {
       >
         <header className={classnames("hero hero--primary", styles.heroBanner)}>
           <div className="container">
-            <VIALogo style={{ padding: 20 }} color={"#fefefe"} />
+            <VIALogo style={{ padding: 20 }} color={"rgba(242,242,242,1)"} />
             <p className="hero__subtitle">{siteConfig.tagline}</p>
           </div>
         </header>
