@@ -26,7 +26,7 @@ sidebar_label: Advanced
       ["Radial All Hues", 0],
       ["Radial Color 1", 1]
     ],
-    "supportedBacklightValues": [
+    "supportedLightingValues": [
       9,
       10,
       11,
