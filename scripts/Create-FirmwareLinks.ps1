@@ -3,9 +3,8 @@ $files = $response.Content | ConvertFrom-Json
 Remove-Item C:\temp\firmware.txt
 $files | % {
     $path = $_.path.Trim()
-    $downloadUrl = $_.download_url.Trim()
     if ($path.EndsWith(".hex") -or $path.EndsWith(".bin")) {
-        "<Download url=""$downloadUrl"" filename=""$path""></Download>"
+        "<Download filename=""$path""></Download>"
     }
 } >> C:\temp\firmware.txt
 
