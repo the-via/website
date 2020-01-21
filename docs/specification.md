@@ -39,7 +39,15 @@ The `productId` property corresponds to the usb product id. This combined with t
 }
 ```
 
-The `lighting` property can either a preset: `none`, `qmk_backlight`, `wt_rgb_backlight`, `wt_mono_backlight` or for more advanced usage an object that extends one of those presets.
+The `lighting` property can either a preset: `none`, `qmk_backlight`, `qmk_rgblight`, `qmk_backlight_rgblight`, `wt_rgb_backlight`, `wt_mono_backlight` or for more advanced usage an object that extends one of those presets.
+
+Use `qmk_backlight` if the firmware enables QMK's core backlight feature with `BACKLIGHT_ENABLE=yes`.
+
+Use `qmk_rgblight` if the firmware enables QMK's core RGB Lighting feature with `RGBLIGHT_ENABLE=yes`.
+
+Use `qmk_backlight_rgblight` if the firmware enables both.
+
+Use of `wt_rgb_backlight` and `wt_mono_backlight` is for keyboards that use the lighting code in `/keyboards/wilba_tech` and not intended to be a generalized interface to other custom lighting implementations. A generalized interface is being developed. Keyboards that do not use QMK's core lighting implementations should wait for the generalized interface instead of implementing the current interface.
 
 ## Matrix
 
@@ -51,7 +59,7 @@ The `lighting` property can either a preset: `none`, `qmk_backlight`, `wt_rgb_ba
 }
 ```
 
-The `matrix` property defines how many rows and columns the pcb switch matrix uses.
+The `matrix` property defines how many rows and columns the PCB's switch matrix uses. This must match the `MATRIX_ROWS` and `MATRIX_COLS` symbols in the QMK firmware.
 
 ## Layouts
 
