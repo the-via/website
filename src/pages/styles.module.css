@@ -16,6 +16,15 @@
   }
 }
 
+:global(.hero__title) {
+  font-weight: 400;
+  font-size: 5rem !important;
+}
+
+:global(.hero__title) span {
+  font-style: oblique;
+}
+
 .buttons {
   display: flex;
   align-items: center;
@@ -30,6 +39,12 @@
 }
 
 .featureImage {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 175px;
+}
+
+.featureButton {
+  display: flex;
+  justify-content: center;
+  margin-bottom: calc(var(--ifm-paragraph-margin-bottom) * 1.5);
 }

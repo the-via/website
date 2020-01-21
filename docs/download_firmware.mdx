@@ -1,0 +1,90 @@
+---
+id: download_firmware
+title: Firmware Downloads
+sidebar_label: Firmware Downloads
+---
+
+import * as fileDownload from "js-file-download";
+const downloadText = (url, filename) =>
+  fetch(url)
+    .then(response => response.text())
+    .then(text => fileDownload(text, filename));
+
+export const Download = ({ filename }) => {
+  const url = `https://raw.githubusercontent.com/the-via/firmware/master/${filename}`;
+  const isHex = filename.endsWith(".hex");
+  const href = isHex ? "#0" : url;
+  const handleClick = isHex ? () => downloadText(url, filename) : undefined;
+  return (
+    <li>
+      <a href={href} onClick={handleClick}>
+        {filename}
+      </a>
+    </li>
+  );
+};
+
+<ul>
+  <Download filename="aeboards_aegis_via.hex"></Download>
+  <Download filename="aeboards_ext65_via.hex"></Download>
+  <Download filename="ai03_equinox_rev0_via.hex"></Download>
+  <Download filename="ai03_equinox_rev1_via.hex"></Download>
+  <Download filename="ai03_lunar_via.hex"></Download>
+  <Download filename="allison_numpad_via.hex"></Download>
+  <Download filename="allison_via.hex"></Download>
+  <Download filename="cannonkeys_an_c_via.bin"></Download>
+  <Download filename="cannonkeys_chimera65_via.bin"></Download>
+  <Download filename="cannonkeys_instant60_via.bin"></Download>
+  <Download filename="cannonkeys_iron165_via.bin"></Download>
+  <Download filename="cannonkeys_satisfaction75_prototype_via.bin"></Download>
+  <Download filename="cannonkeys_satisfaction75_rev1_via.bin"></Download>
+  <Download filename="cannonkeys_savage65_via.bin"></Download>
+  <Download filename="cannonkeys_tmov2_via.bin"></Download>
+  <Download filename="dp60_via.hex"></Download>
+  <Download filename="efreet_via.hex"></Download>
+  <Download filename="exclusive_e6_rgb_via.hex"></Download>
+  <Download filename="handwired_prime_exl_via.hex"></Download>
+  <Download filename="hineybush_h75_singa_via.hex"></Download>
+  <Download filename="hineybush_h87a_via.hex"></Download>
+  <Download filename="hineybush_h88_via.hex"></Download>
+  <Download filename="hineybush_hbcp_via.hex"></Download>
+  <Download filename="hs60_v2_ansi_via.bin"></Download>
+  <Download filename="hs60_v2_default_via.bin"></Download>
+  <Download filename="hs60_v2_hhkb_via.bin"></Download>
+  <Download filename="idb_idb_60_via.hex"></Download>
+  <Download filename="illuminati_is0_via.hex"></Download>
+  <Download filename="keebio_iris_rev1_led_via.hex"></Download>
+  <Download filename="keebio_iris_rev1_via.hex"></Download>
+  <Download filename="keebio_iris_rev2_via.hex"></Download>
+  <Download filename="keebio_iris_rev3_via.hex"></Download>
+  <Download filename="keebio_iris_rev4_via.hex"></Download>
+  <Download filename="kingly_keys_romac_via.hex"></Download>
+  <Download filename="maartenwut_plain60_via.hex"></Download>
+  <Download filename="nk65_default_via.bin"></Download>
+  <Download filename="nk65_via.bin"></Download>
+  <Download filename="noxary_280_via.hex"></Download>
+  <Download filename="primekb_prime_e_via.hex"></Download>
+  <Download filename="quantrik_kyuu_via.hex"></Download>
+  <Download filename="sck_osa_via.hex"></Download>
+  <Download filename="snagpad_via.hex"></Download>
+  <Download filename="westfoxtrot_aanzee_via.hex"></Download>
+  <Download filename="wilba_tech_rama_works_koyu_via.hex"></Download>
+  <Download filename="wilba_tech_rama_works_m10_b_via.hex"></Download>
+  <Download filename="wilba_tech_rama_works_m60_a_via.hex"></Download>
+  <Download filename="wilba_tech_rama_works_m6_a_via.hex"></Download>
+  <Download filename="wilba_tech_rama_works_m6_b_via.hex"></Download>
+  <Download filename="wilba_tech_rama_works_u80_a_via.hex"></Download>
+  <Download filename="wilba_tech_wt60_a_via.hex"></Download>
+  <Download filename="wilba_tech_wt60_d_via.hex"></Download>
+  <Download filename="wilba_tech_wt65_a_via.hex"></Download>
+  <Download filename="wilba_tech_wt65_b_via.hex"></Download>
+  <Download filename="wilba_tech_wt69_a_via.hex"></Download>
+  <Download filename="wilba_tech_wt75_a_via.hex"></Download>
+  <Download filename="wilba_tech_wt75_b_via.hex"></Download>
+  <Download filename="wilba_tech_wt75_c_via.hex"></Download>
+  <Download filename="wilba_tech_wt80_a_via.hex"></Download>
+  <Download filename="wilba_tech_wt8_a_via.hex"></Download>
+  <Download filename="wilba_tech_zeal60_via.hex"></Download>
+  <Download filename="wilba_tech_zeal65_via.hex"></Download>
+  <Download filename="xelus_dawn60_via.hex"></Download>
+</ul>

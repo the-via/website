@@ -1,6 +1,6 @@
 module.exports = {
   title: "VIA",
-  tagline: "Customization made trivial",
+  tagline: "Your keyboard's best friend",
   url: "https://caniusevia.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
@@ -16,7 +16,18 @@ module.exports = {
         src: "img/icon.png"
       },
       links: [
-        { to: "docs/specification", label: "Documentation", position: "left" }
+        {
+          href: "https://github.com/the-via/releases/releases/latest",
+          label: "Download",
+          position: "left"
+        },
+        {
+          to: "docs/supported_keyboards",
+          label: "Supported Keyboards",
+          position: "left"
+        },
+        { to: "docs/specification", label: "Docs", position: "left" },
+        { to: "docs/download_firmware", label: "Firmware", position: "left" }
       ]
     },
     footer: {
