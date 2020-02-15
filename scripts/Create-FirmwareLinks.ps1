@@ -1,7 +1,7 @@
 ﻿function Get-TableHeader() {
     return @"
-    | Compatible as of $((Get-Date).ToString('dd MMM yyyy')) |
-    | ---------------------------- |
+| Compatible as of $((Get-Date).ToString('dd MMM yyyy')) |
+| ---------------------------- |
 "@
 }
 
