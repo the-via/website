@@ -4,6 +4,10 @@ title: Required Properties
 sidebar_label: Required Properties
 ---
 
+Each keyboard supported by VIA has to be described by a json file in the [via keyboards repository](https://github.com/the-via/keyboards)
+
+The file has to be in keyboard specific directory, either in the `other` directory, or, if you have multiple keyboards, in a vendor directory.
+
 ## Name
 
 ```json
