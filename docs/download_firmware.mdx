@@ -12,8 +12,8 @@ keywords:
 import * as fileDownload from "js-file-download";
 const downloadText = (url, filename) =>
   fetch(url)
-    .then(response => response.text())
-    .then(text => fileDownload(text, filename));
+    .then((response) => response.text())
+    .then((text) => fileDownload(text, filename));
 
 export const Download = ({ filename }) => {
   const url = `https://raw.githubusercontent.com/the-via/firmware/master/${filename}`;
@@ -33,12 +33,16 @@ export const Download = ({ filename }) => {
   <Download filename="1upkeyboards_1up60hse_via.hex"></Download>
   <Download filename="1upkeyboards_1up60hte_via.hex"></Download>
   <Download filename="1upkeyboards_1up60rgb_via.hex"></Download>
+  <Download filename="1upkeyboards_sweet16_v1_via.hex"></Download>
+  <Download filename="1upkeyboards_sweet16_v2_promicro_via.hex"></Download>
+  <Download filename="1upkeyboards_sweet16_v2_proton_c_via.bin"></Download>
   <Download filename="40percentclub_luddite_via.hex"></Download>
   <Download filename="aeboards_aegis_via.hex"></Download>
   <Download filename="aeboards_ext65_via.hex"></Download>
   <Download filename="ai03_equinox_rev0_via.hex"></Download>
   <Download filename="ai03_equinox_rev1_via.hex"></Download>
   <Download filename="ai03_lunar_via.hex"></Download>
+  <Download filename="ai03_orbit_x_via.hex"></Download>
   <Download filename="ai03_polaris_via.hex"></Download>
   <Download filename="allison_numpad_via.hex"></Download>
   <Download filename="allison_via.hex"></Download>
@@ -51,6 +55,8 @@ export const Download = ({ filename }) => {
   <Download filename="cannonkeys_satisfaction75_rev1_via.bin"></Download>
   <Download filename="cannonkeys_savage65_via.bin"></Download>
   <Download filename="cannonkeys_tmov2_via.bin"></Download>
+  <Download filename="coseyfannitutti_discipline_via.hex"></Download>
+  <Download filename="coseyfannitutti_romeo_via.hex"></Download>
   <Download filename="dp60_via.hex"></Download>
   <Download filename="duck_eagle_viper_v2_via.hex"></Download>
   <Download filename="dz60_via.hex"></Download>
@@ -64,10 +70,17 @@ export const Download = ({ filename }) => {
   <Download filename="dztech_dz65rgb_v2_via.hex"></Download>
   <Download filename="efreet_via.hex"></Download>
   <Download filename="exclusive_e6_rgb_via.hex"></Download>
+  <Download filename="flx_lodestone_via.hex"></Download>
   <Download filename="flx_virgo_via.hex"></Download>
+  <Download filename="foxlab_leaf60_hotswap_via.hex"></Download>
+  <Download filename="foxlab_leaf60_universal_via.hex"></Download>
+  <Download filename="gh60_revc_via.hex"></Download>
+  <Download filename="gh60_satan_via.hex"></Download>
+  <Download filename="gingham_via.hex"></Download>
   <Download filename="gray_studio_space65_via.hex"></Download>
   <Download filename="gray_studio_think65_hotswap_via.hex"></Download>
   <Download filename="gray_studio_think65_solder_via.hex"></Download>
+  <Download filename="handwired_prime_exl_plus_via.hex"></Download>
   <Download filename="handwired_prime_exl_via.hex"></Download>
   <Download filename="hineybush_h75_singa_via.hex"></Download>
   <Download filename="hineybush_h87a_via.hex"></Download>
@@ -89,20 +102,34 @@ export const Download = ({ filename }) => {
   <Download filename="keebio_iris_rev2_via.hex"></Download>
   <Download filename="keebio_iris_rev3_via.hex"></Download>
   <Download filename="keebio_iris_rev4_via.hex"></Download>
+  <Download filename="keebio_quefrency_rev1_via.hex"></Download>
+  <Download filename="keebio_quefrency_rev2_via.hex"></Download>
   <Download filename="kingly_keys_romac_via.hex"></Download>
+  <Download filename="launchpad_rev1_via.hex"></Download>
+  <Download filename="lazydesigners_dimple_via.hex"></Download>
   <Download filename="m10a_via.hex"></Download>
   <Download filename="maartenwut_plain60_via.hex"></Download>
   <Download filename="mc_76k_via.hex"></Download>
   <Download filename="mechlovin_hannah910_rev1_via.hex"></Download>
   <Download filename="mechlovin_hannah910_rev2_via.hex"></Download>
   <Download filename="mechlovin_infinityce_via.hex"></Download>
+  <Download filename="mountainblocks_mb17_via.hex"></Download>
+  <Download filename="mxss_via.hex"></Download>
   <Download filename="nk65_via.bin"></Download>
   <Download filename="noxary_280_via.hex"></Download>
+  <Download filename="plaid_via.hex"></Download>
   <Download filename="primekb_prime_e_via.hex"></Download>
+  <Download filename="primekb_prime_l_v1_via.hex"></Download>
+  <Download filename="primekb_prime_l_v2_via.hex"></Download>
+  <Download filename="primekb_prime_m_via.hex"></Download>
+  <Download filename="projectkb_alice_via.bin"></Download>
   <Download filename="quantrik_kyuu_via.hex"></Download>
+  <Download filename="reversestudio_decadepad_via.hex"></Download>
   <Download filename="sck_osa_via.hex"></Download>
   <Download filename="sirius_uni660_via.hex"></Download>
   <Download filename="snagpad_via.hex"></Download>
+  <Download filename="tada68_via.bin"></Download>
+  <Download filename="tkc1800_via.hex"></Download>
   <Download filename="tmo50_via.hex"></Download>
   <Download filename="tokyo60_via.hex"></Download>
   <Download filename="walletburner_neuron_via.hex"></Download>
@@ -128,5 +155,6 @@ export const Download = ({ filename }) => {
   <Download filename="wilba_tech_zeal60_via.hex"></Download>
   <Download filename="wilba_tech_zeal65_via.hex"></Download>
   <Download filename="xelus_dawn60_via.hex"></Download>
+  <Download filename="xelus_snap96_via.hex"></Download>
   <Download filename="yatara_drink_me_via.hex"></Download>
 </ul>
