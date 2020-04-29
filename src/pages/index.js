@@ -54,19 +54,19 @@ const features = [
     imageUrl: "img/undraw_walking_around.svg",
     description: <>Download, install, plug in your keyboard. It's that easy.</>,
     callToAction: "Download VIA",
-    callToActionUrl: "https://www.github.com/the-via/releases/releases/latest"
+    callToActionUrl: "https://www.github.com/the-via/releases/releases/latest",
   },
   {
     title: <>Friendly</>,
     imageUrl: "img/undraw_different_love.svg",
     description: (
       <>
-        Compatible with over over 40 keyboards and easily added to other QMK
+        Compatible with over over 100 keyboards and easily added to other QMK
         keyboards.
       </>
     ),
     callToAction: "Check compatibility",
-    callToActionUrl: "/docs/supported_keyboards"
+    callToActionUrl: "/docs/supported_keyboards",
   },
   {
     title: <>Helpful</>,
@@ -78,8 +78,8 @@ const features = [
       </>
     ),
     callToAction: "Read the docs",
-    callToActionUrl: "/docs/specification"
-  }
+    callToActionUrl: "/docs/specification",
+  },
 ];
 
 function Feature({
@@ -87,7 +87,7 @@ function Feature({
   title,
   description,
   callToAction,
-  callToActionUrl
+  callToActionUrl,
 }) {
   const imgUrl = useBaseUrl(imageUrl);
   console.log(callToAction, callToActionUrl);
