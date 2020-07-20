@@ -7,7 +7,7 @@
 
 ### Firmware
 
-$response = curl https://api.github.com/repos/the-via/firmware/contents
+$response = curl https://api.github.com/repos/the-via/firmware/contents -UseBasicParsing
 $files = $response.Content | ConvertFrom-Json
 
 $firmwareList = "C:\temp\firmware.txt"
@@ -24,7 +24,7 @@ $files | % {
 
 ### Keyboards
 
-$response = curl https://www.caniusevia.com/keyboards.v2.json
+$response = curl https://www.caniusevia.com/keyboards.v2.json -UseBasicParsing
 $keyboards = ($response.Content | ConvertFrom-Json).definitions
 
 $keyboardList = "C:\temp\keyboards.txt"
