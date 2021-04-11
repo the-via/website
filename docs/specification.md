@@ -86,4 +86,4 @@ The `matrix` property defines how many rows and columns the PCB's switch matrix 
 }
 ```
 
-The keymap property corresponds to the KLE json exported by [KLE](keyboard-layout-editor.com) and has the switch row, col defined in the top-left legends and optionally the group number, option number defined in the bottom-right legends. The KLE can support up to 3 different colored keys which is used to identify the alpha, modifier and accent keys which VIA will automatically apply a theme to.
+The keymap property corresponds to the KLE json exported by [KLE](http://keyboard-layout-editor.com) and has the switch row, col defined in the top-left legends and optionally the group number, option number defined in the bottom-right legends. The KLE can support up to 3 different colored keys which is used to identify the alpha, modifier and accent keys which VIA will automatically apply a theme to.
