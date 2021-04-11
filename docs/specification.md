@@ -4,6 +4,14 @@ title: Required Properties
 sidebar_label: Required Properties
 ---
 
+VIA needs a graphical representation of your PCB.  This representation is unique to your board and is either checked into https://github.com/the-via/keyboards or is provided by you in the "Design" tab of VIA.
+
+This document describes the format of this JSON configuration file.
+
+Take special notice of the VendorId and the ProductId - they are what VIA reads over USB to discover your JSON file.
+
+Please find example files at https://github.com/the-via/keyboards
+
 ## Name
 
 ```json
