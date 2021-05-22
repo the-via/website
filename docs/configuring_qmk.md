@@ -51,7 +51,7 @@ In order to make VIA support not enabled by default (i.e. so dynamic keymaps is 
 
 You may want to consider enabling bootmagic lite (i.e. change to `BOOTMAGIC_ENABLE = lite`). This will automatically be enabled for VIA-enabled builds, but it is useful for VIA-disabled builds so that the device can be switched into bootloader mode without requiring a `RESET` keycode or pressing the reset button on the PCB.
 
-You may want to consider turning on link time optimization `LINK_TIME_OPTIMIZATION_ENABLE = yes` to reduce firmware size.
+You may want to consider turning on link time optimization `LTO_ENABLE = yes` to reduce firmware size.
 
 Disabling Mouse Keys `MOUSEKEY_ENABLE = no` will also reduce firmware size.
 
