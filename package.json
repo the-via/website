@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build": "node scripts/generate-dynamic-content.js && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy"
   },
@@ -27,5 +27,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "glob": "^7.1.7",
+    "glob-promise": "^4.2.0",
+    "handlebars": "^4.7.7",
+    "node-fetch": "^2.6.1"
   }
 }

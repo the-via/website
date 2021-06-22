@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1dffb2fd-4c0c-4911-b47a-97b499fcf6f8/deploy-status)](https://app.netlify.com/sites/fervent-liskov-52990b/deploys)
+
 # Website
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
