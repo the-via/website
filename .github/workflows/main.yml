@@ -1,15 +1,10 @@
 # This is a basic workflow to help you get started with Actions
 
 name: CI
-
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+  schedule:
+    - cron: "0 14 * * *"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -22,5 +17,3 @@ jobs:
     steps:
       - name: POST to Build Hook
         run: curl -s -X POST -d {} ${{secrets.WEBHOOK}}
-
-  
