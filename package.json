@@ -33,6 +33,6 @@
     "glob": "^7.1.7",
     "glob-promise": "^4.2.0",
     "handlebars": "^4.7.7",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.7"
   }
 }
