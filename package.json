@@ -16,7 +16,7 @@
     "js-file-download": "^0.4.9",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "via-keyboards": "git://github.com/the-via/keyboards.git#refs/heads/master"
+    "via-keyboards": "https://github.com/the-via/keyboards.git#refs/heads/master"
   },
   "browserslist": {
     "production": [
