@@ -3524,9 +3524,9 @@ events@^3.0.0:
   integrity sha512-Dc381HFWJzEOhQ+d8pkNon++bk9h6cdAoAj4iE6Q4y6xgTzySWXlKn05/TVNpjnfRqi/X0EpJEJohPjNI3zpVA==
 
 eventsource@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-1.0.7.tgz#8fbc72c93fcd34088090bc0a4e64f4b5cee6d8d0"
-  integrity sha512-4Ln17+vVT0k8aWq+t/bF5arcS3EpT9gYtW66EPacdj/mAFevznsnyoHLPy2BA8gbIQeIHoPsvwmfBftfcG//BQ==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-1.1.1.tgz#4544a35a57d7120fba4fa4c86cb4023b2c09df2f"
+  integrity sha512-qV5ZC0h7jYIAOhArFJgSfdyz6rALJyb270714o7ZtNnw2WSJ+eexhKtE0O8LYPRsHZHf2osHKZBxGPvm3kPkCA==
   dependencies:
     original "^1.0.0"
 
@@ -9482,9 +9482,9 @@ urix@^0.1.0:
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
 url-parse@^1.4.3:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
-  integrity sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q==
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.10.tgz#9d3c2f736c1d75dd3bd2be507dcc111f1e2ea9c1"
+  integrity sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
@@ -9625,9 +9625,10 @@ vfile@^4.0.0:
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
 
-"via-keyboards@git://github.com/the-via/keyboards.git#refs/heads/master":
+"via-keyboards@https://github.com/the-via/keyboards.git#refs/heads/master":
   version "0.0.1"
-  resolved "git://github.com/the-via/keyboards.git#6b11740db6d857a7788ae37819822682a6919f55"
+  uid afb405a7f35fc36b55e45196a1491bde2e345130
+  resolved "https://github.com/the-via/keyboards.git#afb405a7f35fc36b55e45196a1491bde2e345130"
   dependencies:
     "@types/bluebird" "^3.5.28"
     "@types/glob" "^7.1.1"
@@ -9642,12 +9643,13 @@ vfile@^4.0.0:
     ts-node-dev "^1.0.0-pre.43"
     typescript "^3.6.4"
     typescript-json-schema "^0.40.0"
-    via-reader "git://github.com/the-via/reader.git#f2fbf9cf87adfec271d1953e43ab9c037776535f"
+    via-reader "https://github.com/the-via/reader.git#f2fbf9cf87adfec271d1953e43ab9c037776535f"
     yarn "^1.22.0"
 
-"via-reader@git://github.com/the-via/reader.git#f2fbf9cf87adfec271d1953e43ab9c037776535f":
+"via-reader@https://github.com/the-via/reader.git#f2fbf9cf87adfec271d1953e43ab9c037776535f":
   version "1.0.0"
-  resolved "git://github.com/the-via/reader.git#f2fbf9cf87adfec271d1953e43ab9c037776535f"
+  uid f2fbf9cf87adfec271d1953e43ab9c037776535f
+  resolved "https://github.com/the-via/reader.git#f2fbf9cf87adfec271d1953e43ab9c037776535f"
   dependencies:
     "@types/node" "^12.12.11"
     ajv "^6.10.2"
