@@ -52,9 +52,9 @@ const features = [
   {
     title: <>Simple</>,
     imageUrl: "img/undraw_walking_around.svg",
-    description: <>Download, install, plug in your keyboard. It's that easy.</>,
-    callToAction: "Download VIA",
-    callToActionUrl: "https://www.github.com/the-via/releases/releases/latest",
+    description: <>Plug in your keyboard. It's that easy.</>,
+    callToAction: "Start Now",
+    callToActionUrl: "https://www.usevia.app",
   },
   {
     title: <>Friendly</>,
