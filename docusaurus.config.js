@@ -17,8 +17,8 @@ module.exports = {
       },
       links: [
         {
-          href: "https://github.com/the-via/releases/releases/latest",
-          label: "Download",
+          href: "https://www.usevia.app",
+          label: "Try Now!",
           position: "left"
         },
         {
