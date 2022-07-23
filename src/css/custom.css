@@ -15,6 +15,11 @@
   --ifm-color-primary-lightest: #d18787;
   --ifm-code-font-size: 95%;
   --ifm-footer-padding-vertical: 0.5rem;
+  --ifm-code-background: var(--ifm-color-gray-300);
+}
+
+[data-theme="dark"] {
+  --ifm-code-background: var(--ifm-color-gray-800);
 }
 
 .docusaurus-highlight-code-line {
