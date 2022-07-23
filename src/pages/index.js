@@ -90,7 +90,6 @@ function Feature({
   callToActionUrl,
 }) {
   const imgUrl = useBaseUrl(imageUrl);
-  console.log(callToAction, callToActionUrl);
   return (
     <div className={classnames("col col--4", styles.feature)}>
       {imgUrl && (
