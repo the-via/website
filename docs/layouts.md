@@ -24,6 +24,8 @@ The KLE JSON should follow these rules:
  *  Use key color `#cccccc` for alphas, `#aaaaaa` for modifier keys and `#777777` for accents (i.e. Esc, Enter, arrows, etc).
  *  Use legend color `#000000` for all legends
 
+Note: The key colors used in the KLE will be used by VIA to map alphas/modifiers/accents to a color theme, thus all keys which are the "modifier" color in a standard keycap set should be set to `#aaaaaa`. Some color themes may have the same color for alphas and modifiers.
+
 ## Switch Matrix Co-ordinates
 
 The mapping from physical layout to switch matrix layout is defined by the top-left legend of the key, using `row,col` format.
