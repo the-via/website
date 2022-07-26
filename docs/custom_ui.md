@@ -454,32 +454,32 @@ enum via_buttglow_value {
 
 Thus, overriding `via_custom_value_command_kb()` in the keyboard level code allows firmware authors to write a command handler to set/get the values defined by the custom UI definition in VIA.
 
-In the simple case of implementing a few keyboard specific custom values, it is recommended to use a `channel_id` of `0`, which won't conflict with the channels being handled in `via.c`, as these start with `1`. However, firmware authors could choose to use multiple `channel_id` values, to support multiple features.
+In the simple case of implementing a few keyboard specific custom values, it is recommended to use a `channel_id` of `id_custom_channel = 0`, which won't conflict with the channels being handled in `via.c`, as these start with `1`. However, firmware authors could choose to use multiple `channel_id` values, to support multiple features.
 
-It is possible to combine the default command handlers for a QMK feature (using the default `channel_id`) with a command handler for a keyboard specific feature. For example, a firmware author could use the built-in UI for RGB Matrix on channel `4`, and implement `via_custom_value_command_kb()` to only handle commands on channel `0`.
+It is possible to combine the default command handlers for a QMK feature (using the default `channel_id`) with a command handler for a keyboard specific feature. For example, a firmware author could use the built-in UI for RGB Matrix on channel `id_qmk_rgb_matrix_channel = 4`, and implement `via_custom_value_command_kb()` to only handle commands on channel `id_custom_channel = 0`.
 
-In the rare case of needing to subvert/extend/replace the default custom value handling of a QMK feature, `via_custom_value_command()` itself can be overridden and reimplemented in keyboard level code, handling the default `channel_id` for a QMK feature.
+In the rare case of needing to subvert/extend/replace the default custom value handling of a QMK feature, `via_custom_value_command()` itself can be overridden and reimplemented in keyboard level code, handling the `channel_id` for QMK features.
 
 The following is an example of implementing `via_custom_value_command_kb()`. It routes the three commands to functions to handle each command, this avoids nested switch/case statements and improves readability.
 
 ```c
 void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
-    uint8_t *command_id              = &(data[0]);
-    uint8_t *custom_value_channel_id = &(data[1]);
-    uint8_t *custom_value_data       = &(data[2]);
+    // data = [ command_id, channel_id, value_id, value_data ]
+    uint8_t *command_id        = &(data[0]);
+    uint8_t *channel_id        = &(data[1]);
+    uint8_t *value_id_and_data = &(data[2]);
 
-    // Buttglow is on channel 0
-    if ( *custom_value_channel == 0 ) {
+    if ( *channel_id == id_custom_channel ) {
         switch ( *command_id )
         {
             case id_custom_set_value:
             {
-                buttglow_config_set_value(custom_value_data);
+                buttglow_config_set_value(value_id_and_data);
                 break;
             }
             case id_custom_get_value:
             {
-                buttglow_config_get_value(custom_value_data);
+                buttglow_config_get_value(value_id_and_data);
                 break;
             }
             case id_custom_save:
@@ -491,7 +491,6 @@ void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
             {
                 // Unhandled message.
                 *command_id = id_unhandled;
-                *custom_value_data = *custom_value_data; // force use of variable
                 break;
             }
         }
@@ -510,8 +509,10 @@ The following is an example of implementing the set/get command handlers specifi
 ```c
 void buttglow_config_set_value( uint8_t *data )
 {
-    uint8_t *value_id = &(data[0]);
+    // data = [ value_id, value_data ]
+    uint8_t *value_id   = &(data[0]);
     uint8_t *value_data = &(data[1]);
+
     switch ( *value_id )
     {
         case id_buttglow_brightness:
@@ -525,8 +526,10 @@ void buttglow_config_set_value( uint8_t *data )
 
 void buttglow_config_get_value( uint8_t *data )
 {
-    uint8_t *value_id = &(data[0]);
+    // data = [ value_id, value_data ]
+    uint8_t *value_id   = &(data[0]);
     uint8_t *value_data = &(data[1]);
+
     switch ( *value_id )
     {
         case id_buttglow_brightness:
@@ -557,8 +560,10 @@ The following is an example of a custom UI control using an array value, the arr
 ```c
 void buttglow_config_set_value( uint8_t *data )
 {
+    // data = [ value_id, value_data ]
     uint8_t *value_id = &(data[0]);
     uint8_t *value_data = &(data[1]);
+
     switch ( *value_id )
     {
         case id_buttglow_color: // == 4
