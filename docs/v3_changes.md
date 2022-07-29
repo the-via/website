@@ -22,30 +22,25 @@ This describes the changes made between V2 and V3.
 
 The `lighting` element is deprecated and replaced by specifying **one or more** of the following in the `menus` element:
 
- - `"core/qmk_backlight"`
- - `"core/qmk_rgblight"`
- - `"core/qmk_rgb_matrix"`
+ - `"qmk_backlight"`
+ - `"qmk_rgblight"`
+ - `"qmk_backlight_rgblight"`
+ - `"qmk_rgb_matrix"`
 
 **and/or** defining the custom UI in the `menus` element.
 
 Example:
 
 ```json
-"menus": [
-    "via/keymap",
-    "via/layouts",
-    "via/macros",
-    "via/save_load",
-    "core/qmk_rgb_matrix"
-]
+"menus": [ "qmk_rgb_matrix" ]
 ```
 
-Additionally, `"via/qmk_lighting"` should be added to the `keycodes` element to explicitly enable the QMK keycodes for lighting.
+Additionally, `"qmk_lighting"` can be added to the `keycodes` element to explicitly enable the QMK keycodes for lighting.
 
 Example:
 
 ```json
-"keycodes": ["via/keycodes", "via/qmk_lighting"]
+"keycodes": [ "qmk_lighting" ]
 ```
 
 The above additions are all that is required to enable the UI for controlling the stock lighting features of QMK.
@@ -57,42 +52,31 @@ The `menus` element is new in V3, and used to define the UI (aka. menus) in VIA.
 For example, a keyboard definition for a keyboard that uses the QMK RGB Matrix feature would have the following `menus` element:
 
 ```json
-"menus": [
-    "via/keymap",
-    "via/layouts",
-    "via/macros",
-    "via/save_load",
-    "core/qmk_rgb_matrix"
-]
+"menus": [ "qmk_rgb_matrix" ]
 ```
 
 However, the `menus` element can contain a complete definition of custom UI, allowing full customization of the lighting page, or other custom feature requiring control by VIA.
 
-For example, the item `"core/qmk_rgb_matrix"` in the `menus` element above could be replaced with the equivalent custom UI definition to control the QMK RGB Matrix feature, such as:
+For example, the item `"qmk_rgb_matrix"` in the `menus` element can be replaced with the equivalent custom UI definition to control the QMK RGB Matrix feature, such as:
 
 ```json
 "menus": [
-    "via/keymap",
-    "via/layouts",
-    "via/macros",
-    "via/save_load",
-    [
-        {
-        "label": "Lighting",
+  {
+    "label": "Lighting",
+    "content": [
+      {
+        "label": "Backlight",
         "content": [
-            {
-            "label": "Backlight",
-            "content": [
-                {
-                "label": "Brightness",
-                "type": "range",
-                "options": [0, 255],
-                "content": ["id_qmk_rgb_matrix_brightness", 3, 1]
-                },
-                ...
+          {
+            "label": "Brightness",
+            "type": "range",
+            "options": [0, 255],
+            "content": ["id_qmk_rgb_matrix_brightness", 3, 1]
+          },
+          ...
 ```
 
-The use of `"core/qmk_backlight"`, `"core/qmk_rgblight"` and `"core/qmk_rgb_matrix"` in the `menus` element causes VIA to use the default UI definition that matches the firmware that is built when enabling these features. Firmware authors can replace these with custom UI definitions that are identical, and then change them to match changes made to the firmware.
+The use of `"qmk_backlight"`, `"qmk_rgblight"`, `"qmk_backlight_rgblight"` and `"qmk_rgb_matrix"` in the `menus` element causes VIA to use the default UI definition that matches the firmware that is built when enabling these features. Firmware authors can replace these with custom UI definitions that are identical, and then change them to match changes made to the firmware.
 
 The built-in UI definitions are located in the repository [here](https://github.com/the-via/keyboards/tree/master/common-menus).
 

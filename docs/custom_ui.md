@@ -6,30 +6,22 @@ sidebar_label: Custom UI
 
 ## Introduction
 
-The `menus` element is used to define the UI (aka. menus) in VIA. It can contain **one or more** of the following built-in UI definitions:
+The built-in menus of VIA (`Keymap`, `Layouts`, `Macros`, `Save + Load`) will be displayed depending on keyboard definition and firmware.
 
- - `"via/keymap"`
- - `"via/layouts"`
- - `"via/macros"`
- - `"core/qmk_backlight"`
- - `"core/qmk_rgblight"`
- - `"core/qmk_rgb_matrix"`
- - `"core/qmk_audio"`
+The `menus` element is used to define more menus in VIA. It can contain **one or more** of the following built-in UI definitions:
 
-**and/or** defining the custom UI.
+ - `"qmk_backlight"`
+ - `"qmk_rgblight"`
+ - `"qmk_backlight_rgblight"`
+ - `"qmk_rgb_matrix"`
+ - `"qmk_audio"`
+
+**and/or** defining custom UI.
 
 For example, a definition enabling the built-in UI for QMK RGB Matrix could be done like so:
 
 ```json
-...
-"menus": [
-  "via/keymap",
-  "via/layouts",
-  "via/macros",
-  "via/save_load",
-  "core/qmk_rgb_matrix"
-],
-...
+"menus": ["qmk_rgb_matrix" ]
 ```
 
 **or alternatively** defined explicitly using custom UI definitions, like so:
@@ -37,10 +29,6 @@ For example, a definition enabling the built-in UI for QMK RGB Matrix could be d
 ```json
 ...
 "menus": [
-  "via/keymap",
-  "via/layouts",
-  "via/macros",
-  "via/save_load",
   {
     "label": "Lighting",
     "content": [
@@ -55,18 +43,13 @@ For example, a definition enabling the built-in UI for QMK RGB Matrix could be d
           },
           ...
         ]
-      },
-      ...
+      }
     ]
-  },
-  ...
-],
-...
+  }
+]
 ```
 
-The `"via/keymap"`, `"via/layouts"` and `"via/macros"` strings enable the built-in UI of VIA. They may also be conditionally hidden depending on keyboard defition and firmware.
-
-The `"core/qmk_backlight"`, `"core/qmk_rgblight"`, `"core/qmk_rgb_matrix"` and `"core/qmk_audio"` strings enable the built-in UI definitions that match the default implementation of VIA protocol handlers in QMK, with respect to `channel_id`, `value_id`, etc.
+The `"qmk_backlight"`, `"qmk_rgblight"`, `"qmk_rgb_matrix"`, `"qmk_backlight_rgblight"` and `"qmk_audio"` strings enable the built-in UI definitions that match the default implementation of VIA protocol handlers in QMK, with respect to `channel_id`, `value_id`, etc.
 
 These built-in UI definitions are defined the same way as custom UI definitions (i.e. JSON format) and for reference are located [here](https://github.com/the-via/keyboards/tree/master/common-menus). They can be used as examples to create custom UI definitions.
 
@@ -87,17 +70,11 @@ Thus the "tree" has a maximum depth of three: top-level menu, sub-menu and UI co
 Each element in the `menus` element defines a top-level menu, either a built-in one or a custom defined one. When custom defined, `label` defines the name displayed in the top left menu of the VIA app, and `content` is an array of sub-menu elements.
 
 The following example defines:
- - the common VIA top level menus `Keymap`, `Layouts`, `Macros` and `Save + Load`
  - a top level menu `Lighting` with sub-menus `Underglow` and `Indicators`
  - a top level menu `Display` with sub-menus `General` and `Advanced`
 
 ```json
-...     
 "menus": [
-  "via/keymap",
-  "via/layouts",
-  "via/macros",
-  "via/save_load", 
   {
     "label": "Lighting",
     "content": [
@@ -124,8 +101,7 @@ The following example defines:
       }
     ]
   }
-],
-...
+]
 ```
 
 VIA will then display `Lighting` and `Display` in the top left menu, and then display the sub-menus in the bottom left, like this:
@@ -136,9 +112,15 @@ VIA will then display `Lighting` and `Display` in the top left menu, and then di
 
 For example, all custom UI defined for any kind of lighting should use a top-level menu called `Lighting`, and then the sub-menus should be named with the specifics of that lighting, such as `Underglow`, `Buttglow®`, `Backlight`, `Indicators`.
 
-Other top-level menus should be similarly generalized, such as `Audio`, `Display`, `Encoders`, etc.
+Other top-level menus should be similarly generalized, such as `Audio`, `Display`, `Knobs`, etc.
 
-Multiple top-level menus with the same name will merge to become a single top-level menu. This allows multiple built-in UI definitions and/or custom UI definitions to share the same menu heirarchy. For example, `"core/qmk_backlight"` and `"core/qmk_rgblight"` both define UI under a top-level menu `Lighting`, so when combined, there will be only one `Lighting` menu with sub-menus `Backlight` and `Underglow`.
+Top-level menus will be displayed with an icon based on the `label`. The current list is:
+
+ - `"Lighting"`
+ - `"Audio"`
+ - `"Display"`
+
+Top level menus with a `label` not in this list will be displayed with a generic icon.
 
 In the case where a built-in definition requires some changes to match the firmware, the built-in definition can be inserted in place in the `menus` element and modified. In most cases, the default handlers in the firmware can be used.
 
@@ -158,12 +140,7 @@ The sub-menu element has a `content` element, which is an array of UI control el
 Example:
 
 ```json
-...  
 "menus": [
-  "via/keymap",
-  "via/layouts",
-  "via/macros",
-  "via/save_load", 
   {
     "label": "Lighting",
     "content": [
@@ -186,15 +163,12 @@ Example:
               ["Breathing 1", 2],
               ...
             ]
-          },
-          ...
+          }
         ]
       }
     ]
-  },
-  ...
+  }
 ]
-...
 ```
 
 `label` defines the text label on the left of the control
@@ -212,7 +186,7 @@ For example:
   "type": "range",
   "options": [0, 255],
   "content": ["id_qmk_rgblight_brightness", 2, 1]
-},
+}
 ```
 ... defines a range (slider) UI control, labelled `Brightness`, with a range of 0 to 255. It will be using `channel_id` of `2` and `value_id` of `1` in the VIA protocol to set/get the value in the firmware. It has a `value_key` of `"id_qmk_rgblight_brightness"` because the `value_id` of `1` matches the integer value of `id_qmk_rgblight_brightness` in enum `id_qmk_rgblight` in the firmware code.
 
@@ -249,7 +223,7 @@ The range control is a slider that controls a numeric value. The `options` eleme
 
 ### Dropdown Control
 
-The dropdown control is a drop-down menu of strings, which maps to an integer value. The `options` element defines an array of string/integer pairs, e.g.
+The dropdown control is a drop-down menu of strings, which maps to an integer value. The `options` element defines the item labels and associated number.
 
 ![Custom UI Dropdown Control](/img/custom_ui_dropdown_control.png)
 
@@ -265,6 +239,18 @@ The dropdown control is a drop-down menu of strings, which maps to an integer va
   "content": ["id_date_format", 0, 5]
 }
 ```
+
+The numbers can be omitted from `options`, in which case, the array is of strings and the numbers implicitly assigned starting at zero, for example:
+
+```json
+"options": [
+  "yyyy-mm-dd",
+  "dd/mm/yyyy",
+  "mm/dd/yyyy"
+]
+```
+
+This allows easier definition of things like lighting effects, which can be conditionally enabled. Firmware authors can copy the full set of strings from the built-in UI definition and edit it to match the firmware, without needing to define the numbers.
 
 ### Color Control
 
@@ -305,37 +291,33 @@ The built-in UI for `qmk_rgblight` shows an example of `showIf`. The `Effect Spe
 Example:
 
 ```json
-"content": [
-  ...
-  {
-    "label": "Effect",
-    "type": "dropdown",
-    "content": ["id_qmk_rgblight_effect", 2, 2],
-    "options": [
-      ["All Off", 0],
-      ["Solid Color", 1],
-      ["Breathing 1", 2],
-      ["Breathing 2", 3],
-      ["Breathing 3", 4],
-      ["Breathing 4", 5],
-      ...
-    ]
-  },
-  {
-    "showIf": "{id_qmk_rgblight_effect} >= 2",
-    "label": "Effect Speed",
-    "type": "range",
-    "options": [0, 3],
-    "content": ["id_qmk_rgblight_effect_speed", 2, 3]
-  },
-  {
-    "showIf": "{id_qmk_rgblight_effect} > 0",
-    "label": "Color",
-    "type": "color",
-    "content": ["id_qmk_rgblight_color", 2, 4]
-  }
-  ...
-]
+{
+  "label": "Effect",
+  "type": "dropdown",
+  "content": ["id_qmk_rgblight_effect", 2, 2],
+  "options": [
+    "All Off",
+    "Solid Color",
+    "Breathing 1",
+    "Breathing 2",
+    "Breathing 3",
+    "Breathing 4",
+    ...
+  ]
+},
+{
+  "showIf": "{id_qmk_rgblight_effect} >= 2",
+  "label": "Effect Speed",
+  "type": "range",
+  "options": [0, 3],
+  "content": ["id_qmk_rgblight_effect_speed", 2, 3]
+},
+{
+  "showIf": "{id_qmk_rgblight_effect} > 0",
+  "label": "Color",
+  "type": "color",
+  "content": ["id_qmk_rgblight_color", 2, 4]
+}
 ```
 
 Alternatively, the `showIf` element can "contain" one or more UI controls, which are only shown if the expression evaluates true. 
@@ -343,7 +325,6 @@ Alternatively, the `showIf` element can "contain" one or more UI controls, which
 For example, the following will only display the `Audacity` and `Tenacity` range controls if the `God Mode` toggle is on.
 
 ```json
-...
 {
   "label": "God Mode",
   "type": "toggle",
@@ -365,7 +346,7 @@ For example, the following will only display the `Audacity` and `Tenacity` range
         "content": ["id_tenacity", 0, 3]
     }
   ]
-},
+}
 ...
 ```
 
@@ -380,15 +361,12 @@ In this situation, **one or more numbers** can be added after the `value_id` in 
 Example:
 
 ```json
-...
 "content": ["id_some_value_array[0]", 9, 99, 0]
-...
 ```
 
 For example, to control 3 color values, rather than defining 3 enum values in firmware, a single enum value `id_buttglow_color` can be used, a single integer value used for `value_id`, and a value index appended in the UI control definition, as follows: 
 
 ```json
-...
 {
   "label": "Color 1",
   "type": "color",
@@ -403,8 +381,7 @@ For example, to control 3 color values, rather than defining 3 enum values in fi
   "label": "Color 3",
   "type": "color",
   "content": ["id_buttglow_color[2]", 0, 4, 2]
-},
-...
+}
 ```
 
 Note that the `value_key` (the string in `content`) must be unique per UI control, so for array values, include the array index in the string.
