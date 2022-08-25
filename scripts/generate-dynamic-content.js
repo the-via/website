@@ -3,7 +3,7 @@ const fs = require("fs");
 const Handlebars = require("handlebars");
 
 const transformFirmware = (fw) =>
-  fw.filter(({ path }) => /\.(bin|hex)/.test(path));
+  fw.tree.filter(({ path }) => /\.(bin|hex)/.test(path));
 
 const transformKeyboards = (kbs) =>
   Object.values(kbs.definitions)
@@ -22,7 +22,7 @@ const generateContent = async (url, transform, fileName) => {
 
 [
   [
-    "https://api.github.com/repos/the-via/firmware/contents",
+    "https://api.github.com/repos/the-via/firmware/git/trees/master",
     transformFirmware,
     "download_firmware",
   ],
