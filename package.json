@@ -10,12 +10,12 @@
     "build-azure": "yarn remove via-keyboards && yarn add git://github.com/the-via/keyboards.git && yarn build"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.0-alpha.40",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.40",
+    "@docusaurus/core": "^2.0.1",
+    "@docusaurus/preset-classic": "^2.0.1",
     "classnames": "^2.2.6",
     "js-file-download": "^0.4.9",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "via-keyboards": "https://github.com/the-via/keyboards.git#refs/heads/master"
   },
   "browserslist": {

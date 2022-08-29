@@ -14,7 +14,7 @@ module.exports = {
         alt: "VIA",
         src: "img/icon.png",
       },
-      links: [
+      items: [
         {
           href: "https://www.usevia.app",
           label: "Try Now!",
@@ -32,7 +32,7 @@ module.exports = {
     footer: {
       style: "dark",
       links: [],
-      copyright: "Built with <2 from the VIA team.",
+      copyright: "Built with %3C2 from the VIA team.",
     },
   },
   presets: [
