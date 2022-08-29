@@ -6,11 +6,9 @@ const transformFirmware = (fw) =>
   fw.tree.filter(({ path }) => /\.(bin|hex)/.test(path));
 
 const transformKeyboards = (kbs) =>
-  Object.values(kbs.definitions)
-    .map(({ name }) => name)
-    .sort((a, b) =>
-      a.localeCompare(b, "en", undefined, { sensitivity: "base" })
-    );
+  kbs.sort((a, b) =>
+    a.localeCompare(b, "en", undefined, { sensitivity: "base" })
+  );
 
 const generateContent = async (url, transform, fileName) => {
   const content = await (await fetch(url)).json();
@@ -27,7 +25,7 @@ const generateContent = async (url, transform, fileName) => {
     "download_firmware",
   ],
   [
-    "https://www.caniusevia.com/keyboards.v2.json",
+    "https://www.usevia.app/definitions/keyboard_names.json",
     transformKeyboards,
     "supported_keyboards",
   ],

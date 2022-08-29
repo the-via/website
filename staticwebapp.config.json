@@ -6,7 +6,13 @@
         "cache-control": "public, max-age=604800"
       }
     },
-        {
+    {
+      "route": "/keyboard_names.json",
+      "headers": {
+        "cache-control": "public, max-age=604800"
+      }
+    },
+    {
       "route": "/*.js",
       "headers": {
         "cache-control": "public, max-age=604800"
@@ -17,7 +23,6 @@
       "headers": {
         "cache-control": "public, max-age=604800"
       }
-    },
-
+    }
   ]
 }
