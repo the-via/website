@@ -10,7 +10,7 @@
     "build": "node scripts/generate-dynamic-content.js  && docusaurus build && via-keyboards build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
-    "build-azure": "yarn remove via-keyboards && yarn add https://github.com/the-via/keyboards.git && yarn build"
+    "build-azure": "npm uninstall via-keyboards && npm i --save-dev https://github.com/the-via/keyboards.git && npm run build"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.1",
