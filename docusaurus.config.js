@@ -32,7 +32,7 @@ module.exports = {
     footer: {
       style: "dark",
       links: [],
-      copyright: "Built with %3C2 from the VIA team.",
+      copyright: "Built with &lt;2 from the VIA team.",
     },
   },
   presets: [
