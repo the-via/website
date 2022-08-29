@@ -3,7 +3,7 @@
     {
       "route": "/keyboards.v2.json",
       "headers": {
-        "cache-control": "public, max-age=86400"
+        "cache-control": "public, max-age=604800"
       }
     }
   ]
