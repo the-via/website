@@ -2,6 +2,9 @@
   "name": "caniusevia",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "^18"
+  },
   "scripts": {
     "start": "docusaurus start",
     "build": "node scripts/generate-dynamic-content.js  && docusaurus build && via-keyboards build",
