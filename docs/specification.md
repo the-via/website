@@ -78,7 +78,7 @@ The `menus` element is used to define more menus in VIA. It can contain **one or
  - `"qmk_rgb_matrix"`
  - `"qmk_audio"`
 
-**and/or** defining custom UI.
+**and/or** a definition of custom UI, i.e. explicitly defining all the UI controls required.
 
 For example, a definition enabling the built-in UI for QMK RGB Matrix could be done like so:
 
