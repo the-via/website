@@ -51,11 +51,11 @@ For example, a definition enabling the built-in UI for QMK RGB Matrix could be d
 
 The `"qmk_backlight"`, `"qmk_rgblight"`, `"qmk_rgb_matrix"`, `"qmk_backlight_rgblight"` and `"qmk_audio"` strings enable the built-in UI definitions that match the default implementation of VIA protocol handlers in QMK, with respect to `channel_id`, `value_id`, etc.
 
-These built-in UI definitions are defined the same way as custom UI definitions (i.e. JSON format) and for reference are located [here](https://github.com/the-via/keyboards/tree/master/common-menus). They can be used as examples to create custom UI definitions.
+These built-in UI definitions are defined the same way as custom UI definitions (i.e. JSON format) and for reference are located here: https://github.com/the-via/keyboards/tree/master/common-menus. They can be used as examples to create custom UI definitions.
 
 Definitions containing multiple top level menus with the same name (e.g. `Lighting`) will not merge into one top level menu. Thus, combining `"qmk_backlight"` and `"qmk_rgblight"` will result in two top-level `Lighting` menus. Use `"qmk_backlight_rgblight"` instead.
 
-Similarly, combining built-in UI definitions with custom UI that has the same top-level menu name will result in multiple top-level menus, not a merged one. If you want to combine a built-in UI like `qmk_rgb_matrix` with extra lighting sub-menus under a single `Lighting` top level menu, explicitly define all the UI controls using the built-in UI definition as the base (i.e. copy the definition from [here](https://github.com/the-via/keyboards/tree/master/common-menus)).
+Similarly, combining built-in UI definitions with custom UI that has the same top-level menu name will result in multiple top-level menus, not a merged one. If you want to combine a built-in UI like `qmk_rgb_matrix` with extra lighting sub-menus under a single `Lighting` top level menu, explicitly define all the UI controls using the built-in UI definition as the base.
 
 ## Structure
 
@@ -162,9 +162,9 @@ Example:
             "type": "dropdown",
             "content": ["id_qmk_rgblight_effect", 2, 2],
             "options": [
-              ["All Off", 0],
-              ["Solid Color", 1],
-              ["Breathing 1", 2],
+              "All Off",
+              "Solid Color",
+              "Breathing 1",
               ...
             ]
           }

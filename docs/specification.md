@@ -110,7 +110,13 @@ For example, a definition enabling the built-in UI for QMK RGB Matrix could be d
   }
 ]
 ```
+
 The complete documentation for custom UI is [here](custom_ui).
+
+If the firmware is using the stock implementation of a feature, i.e. it is enabled in the `info.json` or the `rules.mk` and not customized, then using one of the built-in UI definitions is all that is needed.
+
+The built-in UI definitions are defined the same way as custom UI definitions (i.e. JSON format) and for reference are located here: https://github.com/the-via/keyboards/tree/master/common-menus. They can be used as examples to create custom UI definitions.
+
 
 ## Keycodes
 
