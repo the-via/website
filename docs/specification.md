@@ -1,17 +1,13 @@
 ---
 id: specification
-title: Required Properties
-sidebar_label: Required Properties
+title: Specification
+sidebar_label: Specification
 ---
 
 ## Name
 
 ```json
-{
-  ...
-  "name": "RAMA WORKS M6-A",
-  ...
-}
+  "name": "Macropad",
 ```
 
 The `name` property denotes the name of the keyboard being defined.
@@ -19,44 +15,16 @@ The `name` property denotes the name of the keyboard being defined.
 ## Vendor & Product ID
 
 ```json
-{
-  ...
   "vendorId": "0x5241",
-  "productId": "0x006a",
-  ...
-}
+  "productId": "0x1234",
 ```
 
 The `productId` property corresponds to the usb product id. This combined with the `vendorId` is what is used by VIA to identify the keyboard when it is plugged in.
 
-## Lighting
-
-```json
-{
-  ...
-  "lighting": "none",
-  ...
-}
-```
-
-The `lighting` property can either a preset: `none`, `qmk_backlight`, `qmk_rgblight`, `qmk_backlight_rgblight`, `wt_rgb_backlight`, `wt_mono_backlight` or for more advanced usage an object that extends one of those presets.
-
-Use `qmk_backlight` if the firmware enables QMK's core backlight feature with `BACKLIGHT_ENABLE=yes`.
-
-Use `qmk_rgblight` if the firmware enables QMK's core RGB Lighting feature with `RGBLIGHT_ENABLE=yes`.
-
-Use `qmk_backlight_rgblight` if the firmware enables both.
-
-Use of `wt_rgb_backlight` and `wt_mono_backlight` is for keyboards that use the lighting code in `/keyboards/wilba_tech` and not intended to be a generalized interface to other custom lighting implementations. A generalized interface is being developed. Keyboards that do not use QMK's core lighting implementations should wait for the generalized interface instead of implementing the current interface.
-
 ## Matrix
 
 ```json
-{
-  ...
   "matrix": {"rows": 1, "cols": 6},
-  ...
-}
 ```
 
 The `matrix` property defines how many rows and columns the PCB's switch matrix uses. This must match the `MATRIX_ROWS` and `MATRIX_COLS` symbols in the QMK firmware.
@@ -64,8 +32,6 @@ The `matrix` property defines how many rows and columns the PCB's switch matrix 
 ## Layouts
 
 ```json
-{
-  ...
   "layouts": {
     ...
     "keymap": [
@@ -74,8 +40,83 @@ The `matrix` property defines how many rows and columns the PCB's switch matrix 
     ]
     ...
   }
-  ...
-}
 ```
 
-The keymap property corresponds to the KLE json exported by [KLE](http://keyboard-layout-editor.com) and has the switch row, col defined in the top-left legends and optionally the group number, option number defined in the bottom-right legends. The KLE can support up to 3 different colored keys which is used to identify the alpha, modifier and accent keys which VIA will automatically apply a theme to.
+The `keymap` property corresponds to the KLE json exported by [KLE](http://keyboard-layout-editor.com) and has the switch row, col defined in the top-left legends and optionally the group number, option number defined in the bottom-right legends. The KLE can support up to 3 different colored keys which is used to identify the alpha, modifier and accent keys which VIA will automatically apply a theme to.
+
+```json
+  "layouts": {
+    ...
+    "labels": [
+      "Split Backspace",
+      "ISO Enter",
+      "Split Left Shift",
+      "Split Right Shift",
+      ["Bottom Row", "ANSI", "7U", "HHKB", "WKL"]
+    ],
+    ...
+  }
+```
+
+The `labels` property is an optional array of `string` or `string[]` and defines the labels for the layout controls.
+
+The order of the labels is important as the implicit index is used to map to the group number e.g. `Split Backspace` corresponds to layout option #0, `ISO` corresponds to layout option #1, etc.
+
+If an item in the `labels` array is a `string`, it is presented as a toggle button, the off state maps to layout option choice #0 (the default), the on state maps to layout option choice #1.
+
+If an item in the `labels` array is a `string[]`, it maps to a select control with the first item in the array being used as the label for the control and the following items being used as labels of layout option choices #0, #1, #2, etc. In the example above, the `Bottom Row` is the label, `ANSI` maps to layout option choice #0, `7U` maps to layout option choice #1, etc.
+
+Documentation explaining how layout options work is [here](layouts).
+
+## Menus
+
+The `menus` element is used to define more menus in VIA. It can contain **one or more** of the following built-in UI definitions:
+
+ - `"qmk_backlight"`
+ - `"qmk_rgblight"`
+ - `"qmk_backlight_rgblight"`
+ - `"qmk_rgb_matrix"`
+ - `"qmk_audio"`
+
+**and/or** defining custom UI.
+
+For example, a definition enabling the built-in UI for QMK RGB Matrix could be done like so:
+
+```json
+"menus": ["qmk_rgb_matrix" ]
+```
+
+**or alternatively** defined explicitly using custom UI definitions, like so:
+
+```json
+...
+"menus": [
+  {
+    "label": "Lighting",
+    "content": [
+      {
+        "label": "Backlight",
+        "content": [
+          {
+            "label": "Brightness",
+            "type": "range",
+            "options": [0, 255],
+            "content": ["id_qmk_rgb_matrix_brightness", 3, 1]
+          },
+          ...
+        ]
+      }
+    ]
+  }
+]
+```
+The complete documentation for custom UI is [here](custom_ui).
+
+## Keycodes
+
+If the definition is for a keyboard that uses QMK lighting, you can optionally enable the lighting keycodes.
+
+```json
+  "keycodes": ["qmk_lighting"],
+  "menus": ["qmk_rgblight"],
+```
