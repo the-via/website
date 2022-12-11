@@ -19,7 +19,7 @@ In order to allow VIA compatible firmware to be a separate QMK build target from
 
 In most cases this will only require:
 
-    `VIA_ENABLE = yes`
+    VIA_ENABLE = yes
 
 Make sure `yes` is lowercase. `YES` will not enable VIA and you will be most confused.
 
