@@ -49,6 +49,36 @@ QMK Layout Macro Example:
    
 ```
 
+## Rotary Encoders
+
+You can setup your VIA layout to display rotary encorders right in the UI. To do this you need to a few things setup properly in QMK.
+
+Required setup in QMK:
+  * Enable encoder maps as per QMK 
+  * Add ENCODER_ENABLE = yes to rules.mk
+  * Add ENCODER_MAP_ENABLE = yes to keymaps/via/rules.mk
+  * Add an encoder map to keymaps/via/keymap.c
+  * The encoder map should be defined for the same number of layers as configured for VIA (default 4)
+  * Add the encoder to the VIA keyboard definition
+
+### Encoders without push switch (Just twist, no push)
+![Just Encoder](/img/just-encoder.png)
+
+  Add a "key" to the KLE JSON with e0, e1, etc. as the center label. The number will match the encoder ID used in the encoder map.
+
+### Rotary encoder with a push switch
+![Encoder with Switch](/img/encoder-with-push.png)
+
+  Define the switch matrix co-ordinates like other switches and add e0, e1, etc. to the center label of the switch
+
+### Optional Rotary Encoder (combined switch/rotary encoder footprint)
+![Optional Encoder](/img/optional-encoder.png)
+
+  Use VIA Layout Options like other switches. VIA can render either a knob or switch or empty space.
+
+### Here's what it looks like
+![Result](/img/result.png)
+
 ## Layout Options
 
 If a keyboard supports multiple physical layout of keys, then the KLE JSON definition will contain the "default" layout as well as all the layout options.
