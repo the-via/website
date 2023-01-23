@@ -3,7 +3,7 @@ const fs = require("fs");
 const Handlebars = require("handlebars");
 
 const transformFirmware = (fw) =>
-  fw.tree.filter(({ path }) => /\.(bin|hex)/.test(path));
+  fw.tree.filter(({ path }) => /\.(bin|hex|uf2)/.test(path));
 
 const transformKeyboards = (kbs) =>
   kbs.sort((a, b) =>
