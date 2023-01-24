@@ -10,11 +10,11 @@ The built-in menus of VIA (`Keymap`, `Layouts`, `Macros`, `Save + Load`) will be
 
 The `menus` element is used to define more menus in VIA. It can contain **one or more** of the following built-in UI definitions:
 
- - `"qmk_backlight"`
- - `"qmk_rgblight"`
- - `"qmk_backlight_rgblight"`
- - `"qmk_rgb_matrix"`
- - `"qmk_audio"`
+- `"qmk_backlight"`
+- `"qmk_rgblight"`
+- `"qmk_backlight_rgblight"`
+- `"qmk_rgb_matrix"`
+- `"qmk_audio"`
 
 **and/or** a definition of custom UI, i.e. explicitly defining all the UI controls required.
 
@@ -63,7 +63,7 @@ A custom UI definition (as a child element of `menu`) consists of a single top-l
 
 A top-level menu element must contain one or more sub-menu elements as an array in `content`.
 
-Each sub-menu element consists of a `label` and `content` element, and must contain one or more UI control elements as an array in the `content` element. 
+Each sub-menu element consists of a `label` and `content` element, and must contain one or more UI control elements as an array in the `content` element.
 
 Each UI control element must have `label`, `type` and `content` elements.
 
@@ -74,8 +74,9 @@ Thus the "tree" has a maximum depth of three: top-level menu, sub-menu and UI co
 Each element in the `menus` element defines a top-level menu, either a built-in one or a custom defined one. When custom defined, `label` defines the name displayed in the top left menu of the VIA app, and `content` is an array of sub-menu elements.
 
 The following example defines:
- - a top level menu `Lighting` with sub-menus `Underglow` and `Indicators`
- - a top level menu `Display` with sub-menus `General` and `Advanced`
+
+- a top level menu `Lighting` with sub-menus `Underglow` and `Indicators`
+- a top level menu `Display` with sub-menus `General` and `Advanced`
 
 ```json
 "menus": [
@@ -120,18 +121,19 @@ Other top-level menus should be similarly generalized, such as `Audio`, `Display
 
 Top-level menus will be displayed with an icon based on the `label`. The current list is:
 
- - `"Lighting"`
- - `"Audio"`
- - `"Display"`
+- `"Lighting"`
+- `"Audio"`
+- `"Display"`
 
 Top level menus with a `label` not in this list will be displayed with a generic icon.
 
 In the case where a built-in definition requires some changes to match the firmware, the built-in definition can be inserted in place in the `menus` element and modified. In most cases, the default handlers in the firmware can be used.
 
 Examples of this are:
- - Replacing the sub-menu name `Underglow` with a different name
- - Configuring the set of lighting effects (e.g. changing the array of string/number pairs)
- - Adding a new sub-menu and controls to match keyboard-level code which overrides the default behaviour (e.g. customized indicators)
+
+- Replacing the sub-menu name `Underglow` with a different name
+- Configuring the set of lighting effects (e.g. changing the array of string/number pairs)
+- Adding a new sub-menu and controls to match keyboard-level code which overrides the default behaviour (e.g. customized indicators)
 
 This is facilitated by the use of `channel_id` in the set/get custom value commands. See [#Channels](#channels)
 
@@ -177,13 +179,14 @@ Example:
 
 `label` defines the text label on the left of the control
 
-`type` defines the type of control. Valid values are `range`, `dropdown`, 
+`type` defines the type of control. Valid values are `range`, `dropdown`,
 
 `options` defines the possible values of the control (the numerical range, or string/integer values)
 
 `content` defines the binding of the control to the `channel_id` and `value_id` used in the VIA protocol. These values are preceeded by a `value_key` string that is used by VIA. The `value_key` should match the name of the enum value in the firmware for uniqueness and readability. It must be unique for all UI controls in a UI definition.
 
 For example:
+
 ```json
 {
   "label": "Brightness",
@@ -192,6 +195,7 @@ For example:
   "content": ["id_qmk_rgblight_brightness", 2, 1]
 }
 ```
+
 ... defines a range (slider) UI control, labelled `Brightness`, with a range of 0 to 255. It will be using `channel_id` of `2` and `value_id` of `1` in the VIA protocol to set/get the value in the firmware. It has a `value_key` of `"id_qmk_rgblight_brightness"` because the `value_id` of `1` matches the integer value of `id_qmk_rgblight_brightness` in enum `id_qmk_rgblight` in the firmware code.
 
 ### Toggle Control
@@ -212,7 +216,7 @@ The default value data is one byte, either `0` or `1`. The `options` element can
 
 ### Range Control
 
-The range control is a slider that controls a numeric value. The `options` element defines the range limits, e.g. `"options": [0, 255],`. The value data is either one or two bytes depending on the range.
+The range control is a slider that controls a numeric value. The `options` element defines the range limits, e.g. `"options": [0, 255],`. The value data is one byte if the range maximum can fit in one byte (i.e. <=255), otherwise it is two bytes. See [Handling 16-bit Values](#handling-16-bit-values) for handling two byte values.
 
 ![Custom UI Range Control](/img/custom_ui_range_control.png)
 
@@ -284,6 +288,8 @@ The keycode control allows display and editing of a QMK keycode. Firmware writer
 }
 ```
 
+Keycodes are 16-bit values, so the value data is two bytes. See [Handling 16-bit Values](#handling-16-bit-values)
+
 ### Showing/Hiding Controls
 
 Sometimes good UI design requires only showing a control when another control is in a given state. For example, a dropdown control for a "mode" and only showing controls which are used in that "mode".
@@ -324,7 +330,7 @@ Example:
 }
 ```
 
-Alternatively, the `showIf` element can "contain" one or more UI controls, which are only shown if the expression evaluates true. 
+Alternatively, the `showIf` element can "contain" one or more UI controls, which are only shown if the expression evaluates true.
 
 For example, the following will only display the `Audacity` and `Tenacity` range controls if the `God Mode` toggle is on.
 
@@ -368,7 +374,7 @@ Example:
 "content": ["id_some_value_array[0]", 9, 99, 0]
 ```
 
-For example, to control 3 color values, rather than defining 3 enum values in firmware, a single enum value `id_buttglow_color` can be used, a single integer value used for `value_id`, and a value index appended in the UI control definition, as follows: 
+For example, to control 3 color values, rather than defining 3 enum values in firmware, a single enum value `id_buttglow_color` can be used, a single integer value used for `value_id`, and a value index appended in the UI control definition, as follows:
 
 ```json
 {
@@ -396,9 +402,9 @@ See [Handling Array Values](#handling-array-values)
 
 Custom UI is handled in firmware by handling three commands of the VIA protocol:
 
- - `id_custom_set_value`
- - `id_custom_get_value`
- - `id_custom_save`
+- `id_custom_set_value`
+- `id_custom_get_value`
+- `id_custom_save`
 
 When enabling VIA and a feature (like lighting) in QMK Core, by default, the command handlers that match the built-in UI definitions will be compiled. Firmware authors who do not add or extend a feature do not need to write handlers of the above commands.
 
@@ -480,7 +486,7 @@ void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
 
     // Return the unhandled state
     *command_id = id_unhandled;
-    
+
     // DO NOT call raw_hid_send(data,length) here, let caller do this
 }
 ```
@@ -533,6 +539,49 @@ void buttglow_config_save(void)
 ### Saving Values
 
 The `id_custom_save` command is sent after one or more `id_custom_set_value` commands have been sent, and after a small delay. It is used to allow the firmware to defer writing to EEPROM and respond to set value commands quickly. This also reduces the number of redundant writes to EEPROM, especially when users are changing values quickly in VIA, like when using a color picker. The `channel_id` of the `id_custom_save` command will be the same value as used in the `id_custom_set_value` commands which preceeded it, thus a handler to write all current values to EEPROM for a given feature can be called and bound per channel.
+
+### Handling 16-bit Values
+
+The keycode control will send/receive 16-bit values. Likewise, the range control will send/receive 16-bit values if the range maximum is greater than 255. The order of bytes is `[high byte, low byte]`.
+
+In the following example, `g_buttglow_config.audacity` is `uint16_t` and the range control is configured to use a range of 0 to 1023.
+
+```c
+void buttglow_config_set_value( uint8_t *data )
+{
+    // data = [ value_id, value_data ]
+    uint8_t *value_id   = &(data[0]);
+    uint8_t *value_data = &(data[1]);
+
+    switch ( *value_id )
+    {
+        case id_buttglow_audacity:
+        {
+            g_buttglow_config.audacity = value_data[0] << 8 | value_data[1];
+            break;
+        }
+        ...
+    }
+}
+
+void buttglow_config_get_value( uint8_t *data )
+{
+    // data = [ value_id, value_data ]
+    uint8_t *value_id   = &(data[0]);
+    uint8_t *value_data = &(data[1]);
+
+    switch ( *value_id )
+    {
+        case id_buttglow_audacity:
+        {
+            value_data[0] = g_buttglow_config.audacity >> 8;
+            value_data[1] = g_buttglow_config.audacity & 0xFF;
+            break;
+        }
+        ...
+    }
+}
+```
 
 ### Handling Array Values
 
