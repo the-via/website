@@ -4,6 +4,22 @@ title: Specification
 sidebar_label: Specification
 ---
 
+# Specification
+
+In order for VIA to configure a keyboard, it requires a definition of the keyboard - the physical layout of keys, any layout options, and other configurable elements like rotary encoders (knobs), lighting, etc.
+
+These things are defined in a "keyboard definition" - a file in JSON format that is stored in the VIA Github repository and hosted by the VIA website for VIA to download and use when that keyboard is connected.
+
+People adding VIA support to their keyboards can add their keyboard definition to the Github repository by creating a pull request here: https://github.com/the-via/keyboards
+
+Here is a great video by Joe Scotto giving an overview of the process:
+
+<iframe width="640" height="480" src="https://www.youtube.com/embed/7d5yzBOup9U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+## Keyboard Definition
+
+Keyboard definitions are in JSON format. Valid properties are described below.
+
 ## Name
 
 ```json
@@ -72,11 +88,11 @@ Documentation explaining how layout options work is [here](layouts).
 
 The `menus` element is used to define more menus in VIA. It can contain **one or more** of the following built-in UI definitions:
 
- - `"qmk_backlight"`
- - `"qmk_rgblight"`
- - `"qmk_backlight_rgblight"`
- - `"qmk_rgb_matrix"`
- - `"qmk_audio"`
+- `"qmk_backlight"`
+- `"qmk_rgblight"`
+- `"qmk_backlight_rgblight"`
+- `"qmk_rgb_matrix"`
+- `"qmk_audio"`
 
 **and/or** a definition of custom UI, i.e. explicitly defining all the UI controls required.
 
@@ -116,7 +132,6 @@ The complete documentation for custom UI is [here](custom_ui).
 If the firmware is using the stock implementation of a feature, i.e. it is enabled in the `info.json` or the `rules.mk` and not customized, then using one of the built-in UI definitions is all that is needed.
 
 The built-in UI definitions are defined the same way as custom UI definitions (i.e. JSON format) and for reference are located here: https://github.com/the-via/keyboards/tree/master/common-menus. They can be used as examples to create custom UI definitions.
-
 
 ## Keycodes
 
