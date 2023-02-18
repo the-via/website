@@ -61,7 +61,7 @@ const features = [
     imageUrl: "img/undraw_different_love.svg",
     description: (
       <>
-        Compatible with 1200+ keyboards and easily added to other QMK keyboards.
+        Compatible with 1400+ keyboards and easily added to other QMK keyboards.
       </>
     ),
     callToAction: "Check compatibility",
