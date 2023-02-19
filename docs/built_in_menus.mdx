@@ -1,0 +1,15 @@
+---
+id: built_in_menus
+title: Built-in Menus
+sidebar_label: Built-in Menus
+---
+
+import { RenderCommonMenus } from "../components/render-built-in-menus";
+import { commonMenus } from "@the-via/reader";
+export const toc = Object.keys(commonMenus).map((key) => ({
+  value: key,
+  id: key,
+  level: 2,
+}));
+
+<RenderCommonMenus></RenderCommonMenus>
