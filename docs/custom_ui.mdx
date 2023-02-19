@@ -5,6 +5,7 @@ sidebar_label: Custom UI
 ---
 
 import { commonMenus } from "@the-via/reader";
+import Link from "@docusaurus/Link";
 
 ## Introduction
 
@@ -14,12 +15,11 @@ The `menus` element is used to define more menus in VIA. It can contain **one or
 
 <ul>
   {Object.keys(commonMenus).map((key) => (
-    <li>
-      <code>
-        <a href={`/docs/built_in_menus#${key}`}>{key}</a>
-      </code>
+    <li key={key}>
+      <Link to={`/docs/built_in_menus#${key}`}><code>{key}</code></Link>
     </li>
-  ))}
+))}
+
 </ul>
 
 **and/or** a definition of custom UI, i.e. explicitly defining all the UI controls required.
