@@ -4,17 +4,23 @@ title: Custom UI
 sidebar_label: Custom UI
 ---
 
+import { commonMenus } from "@the-via/reader";
+
 ## Introduction
 
 The built-in menus of VIA (`Keymap`, `Layouts`, `Macros`, `Save + Load`) will be displayed depending on keyboard definition and firmware.
 
 The `menus` element is used to define more menus in VIA. It can contain **one or more** of the following built-in UI definitions:
 
-- `"qmk_backlight"`
-- `"qmk_rgblight"`
-- `"qmk_backlight_rgblight"`
-- `"qmk_rgb_matrix"`
-- `"qmk_audio"`
+<ul>
+  {Object.keys(commonMenus).map((key) => (
+    <li>
+      <code>
+        <a href={`/docs/built_in_menus#${key}`}>{key}</a>
+      </code>
+    </li>
+  ))}
+</ul>
 
 **and/or** a definition of custom UI, i.e. explicitly defining all the UI controls required.
 
@@ -51,7 +57,7 @@ For example, a definition enabling the built-in UI for QMK RGB Matrix could be d
 
 The `"qmk_backlight"`, `"qmk_rgblight"`, `"qmk_rgb_matrix"`, `"qmk_backlight_rgblight"` and `"qmk_audio"` strings enable the built-in UI definitions that match the default implementation of VIA protocol handlers in QMK, with respect to `channel_id`, `value_id`, etc.
 
-These built-in UI definitions are defined the same way as custom UI definitions (i.e. JSON format) and for reference are located here: https://github.com/the-via/keyboards/tree/master/common-menus. They can be used as examples to create custom UI definitions.
+These [built-in UI definitions](/docs/built_in_menus) are defined the same way as custom UI definitions (i.e. JSON format). They can be used as examples to create custom UI definitions.
 
 Definitions containing multiple top level menus with the same name (e.g. `Lighting`) will not merge into one top level menu. Thus, combining `"qmk_backlight"` and `"qmk_rgblight"` will result in two top-level `Lighting` menus. Use `"qmk_backlight_rgblight"` instead.
 

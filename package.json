@@ -13,10 +13,12 @@
     "build-azure": "npm uninstall via-keyboards && npm i --save-dev https://github.com/the-via/keyboards.git && npm run build"
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.1",
-    "@docusaurus/preset-classic": "^2.0.1",
+    "@docusaurus/core": "^2.3.1",
+    "@docusaurus/preset-classic": "^2.3.1",
+    "@the-via/reader": "^1.6.0",
     "classnames": "^2.2.6",
     "js-file-download": "^0.4.9",
+    "json-stringify-pretty-compact": "^4.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "via-keyboards": "https://github.com/the-via/keyboards.git#refs/heads/master"

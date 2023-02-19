@@ -7,8 +7,13 @@
 
 module.exports = {
   someSidebar: {
-    Specification: ["specification", "configuring_qmk", "layouts", "custom_ui"],
+    Specification: [
+      "specification",
+      "configuring_qmk",
+      "layouts",
+      { "Custom UI": ["custom_ui", "built_in_menus"] },
+    ],
     Appendix: ["supported_keyboards", "download_firmware"],
-    "VIA Version 3": ["v3_changes"]
-  }
+    "VIA Version 3": ["v3_changes"],
+  },
 };
