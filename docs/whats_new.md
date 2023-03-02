@@ -67,4 +67,4 @@ V3 VIA definitions give designers the flexibility to create a custom UI to contr
 
 ## Discord
 
-[We have a new discord!](https://discord.gg/NStTR5YaPB)
+[We have a new Discord server!](https://discord.gg/NStTR5YaPB)
