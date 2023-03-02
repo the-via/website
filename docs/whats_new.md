@@ -49,7 +49,7 @@ A handy indicator now actually tells you how much of your macro memory you're co
 
 One of the unfortunate side-effects of porting VIA to the web was the heart-breaking loss of sounds in the key tester.
 
-No longer will your key testing be a silent, joyless experience. we've recovered the beeps and we've embiggened the boops. Why buy a heavy, expensive vintage Moog when you can just fire up VIA and use your marginally lighter and marginally cheaper custom keyboard instead?
+No longer will your key testing be a silent, joyless experience. We've recovered the beeps and we've embiggened the boops. Why buy a heavy, expensive vintage Moog when you can just fire up VIA and use your marginally lighter and marginally cheaper custom keyboard instead?
 
 ![Beep boop](/img/whats_new/key_tester.png)
 
