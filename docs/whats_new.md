@@ -3,7 +3,7 @@ id: whats_new
 title: What's New
 ---
 
-# VIA<sup>3</sup>
+# VIA Nº3
 
 ![cubey](/img/whats_new/cubey.png)
 
