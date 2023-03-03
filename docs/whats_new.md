@@ -13,7 +13,7 @@ The VIA team is pleased to announce a new release of VIA.
 
 ### 3D Mode
 
-Olivia, God-tier coder and queen of rose gold, has refactored the entire UI engine to deliver keyboard configuration in glorious 3D.
+Olivia, Binary Artisan and queen of rose gold, has refactored the entire UI engine to deliver keyboard configuration in glorious 3D.
 
 ![VIA 3D](/img/whats_new/via_3d.png)
 
