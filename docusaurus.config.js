@@ -20,6 +20,7 @@ module.exports = {
           label: "Try Now!",
           position: "left",
         },
+        { to: "docs/whats_new", label: "What's New", position: "left" },
         {
           to: "docs/supported_keyboards",
           label: "Supported Keyboards",
@@ -27,6 +28,16 @@ module.exports = {
         },
         { to: "docs/specification", label: "Docs", position: "left" },
         { to: "docs/download_firmware", label: "Firmware", position: "left" },
+        {
+          href: "https://discord.gg/NStTR5YaPB",
+          label: "Discord",
+          position: "right",
+        },
+        {
+          href: "https://github.com/the-via",
+          label: "GitHub",
+          position: "right",
+        },
       ],
     },
     footer: {

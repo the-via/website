@@ -16,8 +16,8 @@
     "@docusaurus/core": "^2.3.1",
     "@docusaurus/preset-classic": "^2.3.1",
     "@the-via/reader": "^1.6.0",
-    "classnames": "^2.2.6",
-    "js-file-download": "^0.4.9",
+    "classnames": "^2.3.2",
+    "js-file-download": "^0.4.12",
     "json-stringify-pretty-compact": "^4.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
@@ -36,9 +36,7 @@
     ]
   },
   "devDependencies": {
-    "glob": "^7.1.7",
-    "glob-promise": "^4.2.0",
     "handlebars": "^4.7.7",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.9"
   }
 }
