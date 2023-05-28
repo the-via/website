@@ -33,7 +33,9 @@ Do not put `VIA_ENABLE = yes` in the keyboard directory’s `rules.mk`. This con
 
 ## Create a `keymap.c` or `keymap.json` in `keyboards/<keyboardname>/keymaps/via`
 
-The keymap in the `via` keymap directory should have the same number of layers being used for dynamic keymaps (by default, this is 4). This is so the dynamic keymaps are initially loaded with sensible default keycodes (mostly `KC_TRNS`), rather than random values. It should use a `LAYOUT_*()` macro that is able to set the VIA layout definition to the correct default keycodes.
+The keymap in the `via` keymap folder should use a `LAYOUT_*()` macro that allows all the electrical positions to be mapped, even if that layout isn't physically possible.
+
+By default, dynamic keymaps have 4 layers. These will be automatically populated with `KC_TRNS` keycodes as necessary, so there is no need to create additional blank layers in your keymap.
 
 There typically is no need to use a `config.h` in the `via` keymap directory.
 
@@ -88,6 +90,18 @@ VIA Configurator will switch to using the value of `keyboard_name` when displayi
 
 Note that spaces are allowed.
 
+### Set `bootmagic.matrix` (optional)
+
+If the Esc key (or top left key) of the keyboard is not at matrix position (0,0), then explicitly set its matrix position in `info.json` at the keyboard level.
+
+    "bootmagic": {
+        "matrix": [3, 4]
+    }
+
+For consistency, it should be set to the top left key of the keyboard, even if this is not the Esc key (e.g. left side numpad keyboards, 40% and smaller keyboards, etc). Always test this works before submitting the PR to QMK.
+
+You may want to consider enabling bootmagic lite at the keyboard level (i.e. adding `"bootmagic": true` to the `features` list in `info.json`). This will automatically be enabled for VIA-enabled builds, but it is still useful for VIA-disabled builds so that the device can be switched into bootloader mode without requiring a `QK_BOOT` keycode or pressing the reset button on the PCB.
+
 ## VIA settings in `config.h`
 
 The VIA implementation in QMK will automatically define its own settings for EEPROM usage, the number of layers used for dynamic keymaps, etc. Unless the keyboard requires loading/saving its own state to EEPROM outside of QMK’s core EEPROM usage, there is no need to override the default settings.
@@ -114,21 +128,15 @@ When VIA is enabled, EEPROM memory is assigned as:
 
 Unless a keyboard is implementing its own storage of state, there is no need to set anything. By enabling VIA, the defaults are set to use EEPROM memory as above. By default, dynamic keymaps are configured to use 4 layers, and the remaining EEPROM memory (up to 1K) is used for macros.
 
-## Changes to keyboard directory’s `config.h` (optional)
-
-### Change `BOOTMAGIC_LITE_ROW`, `BOOTMAGIC_LITE_COLUMN`
-
-If the Esc key (or top left key) of the keyboard is not at matrix position (0,0), then explicitly set `BOOTMAGIC_LITE_ROW` and `BOOTMAGIC_LITE_COLUMN` in `config.h` at the keyboard level. For consistency, it should be set to the top left key of the keyboard, even if this is not the Esc key (e.g. left side numpad keyboards, 40% and smaller keyboards, etc). Always test this works before submitting the PR to QMK.
-
-You may want to consider enabling bootmagic lite at the keyboard level (i.e. adding `"bootmagic": true` to the `features` list in `info.json`). This will automatically be enabled for VIA-enabled builds, but it is useful for VIA-disabled builds so that the device can be switched into bootloader mode without requiring a `QK_BOOT` keycode or pressing the reset button on the PCB.
-
 ## Running out of space?
 
 Keyboards with many features and/or large keymaps may fail to compile with VIA support if there is not enough flash memory or EEPROM available.
 
-Reducing the number of dynamic keymap layers available will lower EEPROM usage and firmware size. This can be accomplished by setting `DYNAMIC_KEYMAP_LAYER_COUNT` appropriately in the keymap directory's `config.h`:
+Reducing the number of dynamic keymap layers available will lower EEPROM usage and firmware size. This can be accomplished by setting `dynamic_keymap.layer_count` appropriately in `info.json`:
 
-    #define DYNAMIC_KEYMAP_LAYER_COUNT 3
+    "dynamic_keymap": {
+        "layer_count": 3
+    }
 
 To reduce firmware size, consider turning on link time optimization by adding `LTO_ENABLE = yes` to the keymap directory's `rules.mk` file. This may have unexpected side effects on keyboards using ARM processors, so test thoroughly with it enabled and disabled.
 
