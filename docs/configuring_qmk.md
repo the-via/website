@@ -35,7 +35,7 @@ Do not put `VIA_ENABLE = yes` in the keyboard directory’s `rules.mk`. This con
 
 The keymap in the `via` keymap folder should use a `LAYOUT_*()` macro that allows all the electrical positions to be mapped, even if that layout isn't physically possible.
 
-By default, dynamic keymaps have 4 layers. These will be automatically populated with `KC_TRNS` keycodes as necessary, so there is no need to create additional blank layers in your keymap.
+By default, dynamic keymaps have 4 layers. These will be automatically populated with `KC_TRNS` keycodes as necessary, so there is no need to create more than 4 layers in your keymap in the default case.
 
 There typically is no need to use a `config.h` in the `via` keymap directory.
 
