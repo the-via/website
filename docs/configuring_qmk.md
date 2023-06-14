@@ -6,18 +6,20 @@ sidebar_label: Configuring QMK
 
 ## Overview
 
-VIA works by communicating with the firmware that is running on the device and sending it commands across USB. Enabling the VIA feature in QMK is enabling both the ability to communicate with the VIA Configurator and the ability to store keymaps and other settings.
+VIA works by communicating with the firmware that is running on the device and sending it commands across USB. Enabling the VIA feature in QMK enables both the ability to communicate with the VIA Configurator and the ability to store keymaps and other settings.
 
-- Create a `via` keymap directory and files within to make a VIA enabled firmware different to the default
-- Make changes to the keyboard's `config.h` and `rules.mk` to make the firmware compatible
+- Create a `via` keymap directory and files within that are separate from the default keymap
+- Make changes to the keyboard's `info.json` and `rules.mk` to make the firmware compatible
 
 ## Create a `via` Keymap Directory and Files in QMK Source
 
-In order to allow VIA compatible firmware to be a separate QMK build target from the default, create a `via` keymap directory e.g. `keyboards/<keyboardname>/keymaps/via`
+VIA compatible firmware must be a separate QMK build target from the default keymap. Create a `via` keymap directory, e.g. `keyboards/<keyboardname>/keymaps/via`
+
+For acceptance into the upstream QMK repository this folder must be named `via`, but that is not an absolute requirement for your copy of the repository. It is possible to add VIA support to any keymap with the correct configuration.
 
 ## Create a `rules.mk` in `keyboards/<keyboard_name>/keymaps/via`
 
-In most cases this will only require:
+In most cases this file will only require:
 
     VIA_ENABLE = yes
 
@@ -25,94 +27,86 @@ Make sure `yes` is lowercase. `YES` will not enable VIA and you will be most con
 
 This will enable dynamic keymaps, raw HID message handling and bootmagic lite.
 
-Note: ‘bootmagic lite’ is highly recommended to the point of being essential. ‘bootmagic lite’ is the ability to hold down Esc (or some other key) while inserting USB cable to both jump to bootloader and reset the EEPROM. Thus if for some reason the EEPROM contains data that is out of sync with the firmware, and things aren’t working as expected (e.g. garbage keycodes in VIA), the device can be ‘factory reset’. It also makes redundant the need for a ‘RESET’ keycode in the keymap. The VIA implementation in QMK overrides the default ‘bootmagic_lite()’ but the only difference is additionally invalidating VIA’s EEPROM memory.
+‘Bootmagic Lite’ is the ability to hold down Esc (or some other key) while plugging in the keyboard to both jump to bootloader and reset the EEPROM. Thus if for some reason the EEPROM contains data that is out of sync with the firmware, and things aren’t working as expected (e.g. garbage keycodes in VIA), the device can be ‘factory reset’. It also makes redundant the need for a ‘QK_BOOT’ keycode in the keymap.
 
-The keyboard’s own `rules.mk` should be compatible with the VIA-specific firmware and so nothing else is needed.
+Do not put `VIA_ENABLE = yes` in the keyboard directory’s `rules.mk`. This configuration should only be added to VIA-specific keymaps, not enabled by default at the keyboard level.
 
-Currently, VIA is incompatible with features that change the integer values of `enum quantum_keycodes`, i.e. that optionally add enum values to `enum quantum_keycodes` and change the sequential assignment of integer values to enum names. As such, the following features must be disabled for VIA support, until this issue is fixed (i.e. a refactor of `enum quantum_keycodes`):
+## Create a `keymap.c` or `keymap.json` in `keyboards/<keyboardname>/keymaps/via`
 
-- LEADER_ENABLE
-- FAUXCLICKY_ENABLE
-- MIDI_ENABLE
-- BLUETOOTH_ENABLE
-- KEY_LOCK_ENABLE
-- TERMINAL_ENABLE
+The keymap in the `via` keymap folder should use a `LAYOUT_*()` macro that allows all the electrical positions to be mapped, even if that layout isn't physically possible.
 
-## Create a `keymap.c` in `keyboards/<keyboardname>/keymaps/via`
+By default, dynamic keymaps have 4 layers. These will be automatically populated with `KC_TRNS` keycodes as necessary, so there is no need to create more than 4 layers in your keymap in the default case.
 
-The `keymap.c` in the `via` keymap directory should have a default keymap with the same number of layers as is being used for dynamic keymaps (by default, this is 4). This is so that the dynamic keymaps are initially loaded with sensible default keycodes (mostly `KC_TRNS`), rather than random values. It should use a `LAYOUT_*()` macro that is able to set the "default keymap" (as defined in `<keyboard.json>` to the correct default keycodes.
-There typically is no need to use a `config.h` in the `via` keymap directory. Any settings required for VIA should be put in the keyboard directory’s `config.h`
+There typically is no need to use a `config.h` in the `via` keymap directory.
 
 > Q: Can I use more or less than 4 layers?
 >
 > A: Yes, if it can fit in the EEPROM space. This is advanced usage and requires understanding how dynamic keymaps works and overriding the default settings.
 
-## Changes to keyboard directory’s `rules.mk`
+## Changes to keyboard directory’s `info.json`
 
-In order to make VIA support not enabled by default (i.e. so dynamic keymaps is not enabled for QMK Configurator builds, or power users’ compiled QMK firmware), do not put `VIA_ENABLE = yes` in the keyboard directory’s `rules.mk`. Instead, only put this in the `via` keymap directory’s `rules.mk`
-
-You may want to consider enabling bootmagic lite (i.e. change to `BOOTMAGIC_ENABLE = lite`). This will automatically be enabled for VIA-enabled builds, but it is useful for VIA-disabled builds so that the device can be switched into bootloader mode without requiring a `RESET` keycode or pressing the reset button on the PCB.
-
-You may want to consider turning on link time optimization `LTO_ENABLE = yes` to reduce firmware size.
-
-Disabling Mouse Keys `MOUSEKEY_ENABLE = no` will also reduce firmware size.
-
-## Changes to keyboard directory’s `config.h`
-
-### Change `VENDOR_ID`, `PRODUCT_ID`
+### Change `usb.vid` and `usb.pid`
 
 There is a high probability that these values are the defaults from the QMK new keyboard script or were copied from another keyboard implementation and left unchanged, e.g:
 
-    #define VENDOR_ID 0xFEED
-    #define PRODUCT_ID 0x0000
+    "usb": {
+        "vid": "0xFEED",
+        "pid": "0x0000",
+    }
 
 VIA Configurator uses these to identify the device, so they must be unique to the device.
 
-Note that multiple versions/revisions of a keyboard PCB can use the same vendor/product if they function the same from VIA Configurator’s point of view, i.e. they have the same (or compatible) physical key layout and switch matrix topology and the same “layout macro” (mapping physical key layout to switch matrix layout) is used. VIA Configurator doesn’t care which I/O pins are being used, it just reads/writes keycodes to the dynamic keymaps stored in switch matrix addressing. As such, please consider carefully whether you actually need to create more than one vendor/product ID pair for multiple versions of the same keyboard PCB.
+Note that multiple versions/revisions of a keyboard PCB can use the same vendor/product if they function identically from VIA Configurator’s point of view, i.e. they have the same (or compatible) physical key layout and switch matrix topology and the same “layout macro” (mapping physical key layout to switch matrix layout) is used. VIA Configurator doesn’t care which I/O pins are being used, it just reads/writes keycodes to the dynamic keymaps stored in switch matrix addressing. As such, please consider carefully whether you actually need to create more than one vendor/product ID pair for multiple versions of the same keyboard PCB.
 
-It is recommended to choose a value of `VENDOR_ID` that unique to the keyboard PCB’s designer/vendor, i.e. it will be the same for all keyboards with a common parent directory.
+It is recommended to choose a value of `vid` that unique to the keyboard PCB’s designer/vendor, i.e. it will be the same for all keyboards with a common parent directory.
 
 For example, keyboards in `/keyboards/wilba_tech` use:
 
-    #define VENDOR_ID       0x6582 // wilba.tech
+    "vid": "0x6582"
 
-After choosing a `VENDOR_ID` value, search for this value in all `config.h` files to ensure it is unique. To confirm your search is working correctly, the `config.h` being changed should be in the search results.
+After choosing a `vid` value, search for this value in all `info.json` files to ensure it is unique. To confirm your search is working correctly, the `info.json` being changed should be in the search results.
 
-A suggested method of choosing a unique `VENDOR_ID` is choosing two letters from the keyboard’s designer/vendor name and using the two 8-bit ASCII values of these letters.
+A suggested method of choosing a unique `vid` is choosing two letters from the keyboard’s designer/vendor name and using the two 8-bit ASCII values of these letters.
 
-For example, keyboards in `/keyboards/kingley_keys` will all use:
+For example, keyboards in `/keyboards/kingly_keys` will all use:
 
-    #define VENDOR_ID 0x4B4B // “KK” = Kingley Keys
+    "vid": "0x4B4B"
 
-Choose a `PRODUCT_ID` that is unique for all keyboards using the same `VENDOR_ID`. They can simply be numbered sequentially, e.g. 0x0001, 0x0002.
+The ASCII value of the letter “K” is 4B. Thus **K**ingly **K**eys becomes 0x4B4B.
+
+Choose a `pid` that is unique for all keyboards using the same `vid`. They can simply be numbered sequentially, e.g. 0x0001, 0x0002.
 
 > Q: Wouldn’t it be better if all VIA compatible keyboards used the same vendor/product IDs (perhaps an officially licenced one) and then VIA queries to get the device identity?
 >
 > A: Yes, it would be slightly better, but this method continues QMK’s unofficial use of arbitrary vendor/product IDs and doesn’t introduce another unique ID.
 
-### Change `PRODUCT`
+### Change `keyboard_name`
 
-The text defined by the `PRODUCT` symbol in `config.h` is what will appear in the list of devices (for example, in the ‘Bluetooth & other devices’ page of Windows, and in a notification when the device is first connected and being ‘installed’).
+The value of `keyboard_name` in `info.json` is what will appear in the list of devices (for example, in the ‘Bluetooth & other devices’ page of Windows, and in a notification when the device is first connected and being ‘installed’).
 
-It is highly recommended that the value of `PRODUCT` is changed to be a combination of designer/vendor and the device name. For example:
+    "keyboard_name": "WT60-D"
 
-    #define MANUFACTURER    wilba.tech
-    #define PRODUCT         wilba.tech WT60-D
-    #define DESCRIPTION     wilba.tech WT60-D
-
-VIA Configurator will in future switch to using the value of `PRODUCT` when displaying the device’s name, rather than the name in the `<keyboard_name>.json`. This will allow firmware level customization.
+VIA Configurator will switch to using the value of `keyboard_name` when displaying the device’s name in the future, rather than using the name in the VIA layout definition. This will allow firmware level customization.
 
 Note that spaces are allowed.
 
-### Change `BOOTMAGIC_LITE_ROW`, `BOOTMAGIC_LITE_COLUMN` (optional)
+### Set `bootmagic.matrix` (optional)
 
-VIA implementation will enable bootmagic lite since it is practically essential. If the Esc key (or top left key) of the keyboard is not at matrix position (0,0), then explicitly set `BOOTMAGIC_LITE_ROW` and `BOOTMAGIC_LITE_COLUMN` in `config.h`. For consistency, it should be set to the top left key of the keyboard, even if this is not the Esc key (e.g. left side numpad keyboards, 40% and smaller keyboards, etc). Always test this works before submitting the PR to QMK.
+If the Esc key (or top left key) of the keyboard is not at matrix position (0,0), then explicitly set its matrix position in `info.json` at the keyboard level.
+
+    "bootmagic": {
+        "matrix": [3, 4]
+    }
+
+For consistency, it should be set to the top left key of the keyboard, even if this is not the Esc key (e.g. left side numpad keyboards, 40% and smaller keyboards, etc). Always test this works before submitting the PR to QMK.
+
+You may want to consider enabling bootmagic lite at the keyboard level (i.e. adding `"bootmagic": true` to the `features` list in `info.json`). This will automatically be enabled for VIA-enabled builds, but it is still useful for VIA-disabled builds so that the device can be switched into bootloader mode without requiring a `QK_BOOT` keycode or pressing the reset button on the PCB.
 
 ## VIA settings in `config.h`
 
-The VIA implementation in QMK will automatically define its own settings for EEPROM usage, the number of layers used for dynamic keymaps, etc. Unless the keyboard requires loading/saving its own state to EEPROM outside of QMK’s core EEPROM usage, there is no need to override the default settings in `config.h`
+The VIA implementation in QMK will automatically define its own settings for EEPROM usage, the number of layers used for dynamic keymaps, etc. Unless the keyboard requires loading/saving its own state to EEPROM outside of QMK’s core EEPROM usage, there is no need to override the default settings.
 
-However, if you are doing something advanced and require changing VIA’s settings, do this in the keyboard level’s `config.h`. Keyboards that use EEPROM for backlight or rotary encoder handling can use code in `via.h` for builds with or without VIA support.
+However, if you are doing something advanced and require changing VIA’s settings, add a `config.h` to the `via` keymap directory.
 
 ### `VIA_EEPROM_LAYOUT_OPTIONS_SIZE`
 
@@ -132,4 +126,18 @@ When VIA is enabled, EEPROM memory is assigned as:
 - Dynamic Keymaps (`DYNAMIC_KEYMAP_EEPROM_ADDR` to `DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR-1`)
 - Macros (`DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR` to `DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR+DYNAMIC_KEYMAP_MACRO_EEPROM_SIZE-1`)
 
-Unless a keyboard is implementing it's own storage of state, there is no need to set anything, by enabling VIA, the defaults are set to use EEPROM memory as above. By default, dynamic keymaps are configured to use 4 layers, and the remaining EEPROM memory (up to 1K) is used for macros.
+Unless a keyboard is implementing its own storage of state, there is no need to set anything. By enabling VIA, the defaults are set to use EEPROM memory as above. By default, dynamic keymaps are configured to use 4 layers, and the remaining EEPROM memory (up to 1K) is used for macros.
+
+## Running out of space?
+
+Keyboards with many features and/or large keymaps may fail to compile with VIA support if there is not enough flash memory or EEPROM available.
+
+Reducing the number of dynamic keymap layers available will lower EEPROM usage and firmware size. This can be accomplished by setting `dynamic_keymap.layer_count` appropriately in `info.json`:
+
+    "dynamic_keymap": {
+        "layer_count": 3
+    }
+
+To reduce firmware size, consider turning on link time optimization by adding `LTO_ENABLE = yes` to the keymap directory's `rules.mk` file. This may have unexpected side effects on keyboards using ARM processors, so test thoroughly with it enabled and disabled.
+
+If link time optimization doesn't get the job done or exposes buggy behavior, you may have to disable QMK features. More advice on this can be found [in QMK's documentation](https://docs.qmk.fm/#/squeezing_avr).
