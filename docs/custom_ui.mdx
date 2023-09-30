@@ -185,7 +185,13 @@ Example:
 
 `label` defines the text label on the left of the control
 
-`type` defines the type of control. Valid values are `range`, `dropdown`,
+`type` defines the type of control. Valid values are:
+- `button`
+- `toggle`
+- `range`
+- `dropdown`
+- `color`
+- `keycode`
 
 `options` defines the possible values of the control (the numerical range, or string/integer values)
 
@@ -203,6 +209,25 @@ For example:
 ```
 
 ... defines a range (slider) UI control, labelled `Brightness`, with a range of 0 to 255. It will be using `channel_id` of `2` and `value_id` of `1` in the VIA protocol to set/get the value in the firmware. It has a `value_key` of `"id_qmk_rgblight_brightness"` because the `value_id` of `1` matches the integer value of `id_qmk_rgblight_brightness` in enum `id_qmk_rgblight` in the firmware code.
+
+### Button Control
+
+The button control is a clickable that sends a numeric value. 
+
+
+![Custom UI Button Control](/img/custom_ui_button_control.png)
+
+```json
+{
+  "label": "Test button",
+  "type": "button",
+  "options": [10],
+  "content": ["id_test_button", 0, 3]
+}
+```
+
+The `options` element defines value to be sent, e.g. `"options": [10],`. The value data is one byte (i.e. <=255), otherwise it is two bytes. See [Handling 16-bit Values](#handling-16-bit-values) for handling two byte values.
+
 
 ### Toggle Control
 
