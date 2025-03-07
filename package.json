@@ -21,7 +21,7 @@
     "json-stringify-pretty-compact": "^4.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "via-keyboards": "https://github.com/the-via/keyboards.git#refs/heads/master"
+    "via-keyboards": "github:the-via/keyboards"
   },
   "browserslist": {
     "production": [
