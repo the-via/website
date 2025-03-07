@@ -4134,7 +4134,7 @@ __metadata:
     node-fetch: "npm:^2.6.9"
     react: "npm:^17.0.0"
     react-dom: "npm:^17.0.0"
-    via-keyboards: "https://github.com/the-via/keyboards.git#refs/heads/master"
+    via-keyboards: "github:the-via/keyboards"
   languageName: unknown
   linkType: soft
 
@@ -11309,9 +11309,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"via-keyboards@https://github.com/the-via/keyboards.git#refs/heads/master":
+"via-keyboards@github:the-via/keyboards":
   version: 0.1.0
-  resolution: "via-keyboards@https://github.com/the-via/keyboards.git#commit=ad0063201f0b8694ca25e755015bb7c595f0554d"
+  resolution: "via-keyboards@https://github.com/the-via/keyboards.git#commit=799e90e3317528ba6141bad18e698a8139a6911b"
   dependencies:
     "@the-via/reader": "npm:^1.9.0"
     "@types/fs-extra": "npm:^11.0.1"
@@ -11323,7 +11323,7 @@ __metadata:
     typescript: "npm:^4.9.5"
   bin:
     via-keyboards: ./bin/cli.js
-  checksum: 10c0/78ae990ccccc2e5d75aa5418438f2bad196777815c8e2d8b3d0c3fc450d97cde9400a39304eb46f8ee9e4c2c80fbb02974b9500f71d6a64ee6f6989d65cb1e73
+  checksum: 10c0/0ae5c555d85ae047c65652492210bce35808550509efe0be1d9ab6b88edd0c101cba116297740340b092315b3c81888b8f27b889d8241379ffb5fa4020884f5c
   languageName: node
   linkType: hard
 
