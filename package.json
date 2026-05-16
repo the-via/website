@@ -36,7 +36,7 @@
     ]
   },
   "devDependencies": {
-    "handlebars": "^4.7.7",
+    "handlebars": "^4.7.9",
     "node-fetch": "^2.6.9"
   },
   "packageManager": "yarn@4.7.0"
