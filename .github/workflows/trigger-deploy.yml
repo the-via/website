@@ -6,7 +6,7 @@ on:
       - main
       - master
   repository_dispatch:
-    types: [definition_update]
+    types: [definition_update, firmware_update]
   workflow_dispatch:
 
 jobs:
