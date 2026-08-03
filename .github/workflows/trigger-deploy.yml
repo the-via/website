@@ -6,14 +6,18 @@ on:
       - main
       - master
   repository_dispatch:
-    types: [definition_update, firmware_update]
+    types:
+      - definition_update
+      - firmware_update
   workflow_dispatch:
 
 jobs:
   build_and_deploy_job:
     runs-on: ubuntu-latest
     name: Trigger deploy hook
+
     steps:
       - name: Send request to trigger deploy hook
         run: |
-          curl -s -X POST "${{secrets.DEPLOY_HOOK_URL}}"
+          curl --fail-with-body --show-error --silent \
+            -X POST "${{ secrets.DEPLOY_HOOK_URL }}"
