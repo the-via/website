@@ -1,4 +1,4 @@
-# [VIA Website](https://www.caniusevia.com) - Your keyboards best friend
+# [VIA Website](https://www.caniusevia.com) - Your keyboard's best friend
 
 ![android-chrome-192x192](https://user-images.githubusercontent.com/1714072/222621960-ddfb8ee6-a486-4c66-8852-b204ba7c807b.png)
 
@@ -8,9 +8,9 @@ VIA is a powerful, open-source web-based interface for configuring your [QMK](ht
 
 Are you a keyboard maker or a developer interested in adding support for your keyboard? We welcome contributions to the VIA project!
 
-1. The source code of the keyboard **has to be merged** in [QMK Firmware Repositories](https://github.com/qmk/qmk_firmware) Master branch.
-2. Your `keymaps/via` keymap **has to be merged** in [VIA's QMK Userspace Repository](https://github.com/the-via/qmk_userspace_via) Main branch.
-3. Create a definition in JSON format for your keyboard and submit it as a pull request to [VIA's Keyboards Repository](https://github.com/the-via/keyboards) Master branch.
+1. The keyboard implementation must be merged into the [QMK Firmware repository](https://github.com/qmk/qmk_firmware) `master` branch.
+2. Its `keymaps/via` keymap must be merged into [VIA's QMK Userspace repository](https://github.com/the-via/qmk_userspace_via) `main` branch.
+3. Its JSON definition must be submitted to the [VIA Keyboards repository](https://github.com/the-via/keyboards) `master` branch.
 
 Please follow our [Specification documentation](https://www.caniusevia.com/docs/specification) carefully to ensure your pull request is smoothly reviewed and merged.
 

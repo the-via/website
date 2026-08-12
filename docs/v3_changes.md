@@ -6,13 +6,15 @@ sidebar_label: VIA Version 3 Changes
 
 ## Introduction
 
-In VIA Version 1,the UI and the keyboard definitions were entirely self-contained (i.e. hard-coded). Adding new keyboards requires changing code and rebuilding/releasing the app.
+In VIA Version 1, the UI and the keyboard definitions were entirely self-contained (i.e. hard-coded). Adding new keyboards requires changing code and rebuilding/releasing the app.
 
-VIA Version 2 moved the keyboard definitions into externally defined files, which are stored in a GitHub repository. The keyboard definitions are served to the VIA client at run-time. This allowed anyone to add new keyboards to VIA without requiring changing the source and rebuilding/releasing the app.
+VIA Version 2 moved the keyboard definitions into externally defined files, which are stored in a GitHub repository. The keyboard definitions are served to the VIA client at runtime. This allowed anyone to add new keyboards to VIA without requiring changing the source and rebuilding/releasing the app.
 
 VIA Version 2 keyboard definitions include layout options and control of lighting, but definitions were restricted to the existing UI elements.
 
 VIA Version 3 is a refactoring of how the UI works in VIA, to allow fully customized UI within VIA to control firmware parameters like lighting, but also **any custom feature** implemented in the firmware, either in QMK Core or at the keyboard level. It works by defining what UI elements VIA should show, and binding those UI elements to IDs, which VIA will use in communication with the firmware.
+
+This page documents the historical transition from V2 to V3 definitions and VIA protocol 11. For capabilities added after the original V3 release, see [Changes Since VIA Version 3](post_v3_changes).
 
 ## Keyboard Definition Changes for VIA V2 to V3
 
@@ -35,19 +37,21 @@ Example:
 "menus": [ "qmk_rgb_matrix" ]
 ```
 
-Additionally, `"qmk_lighting"` can be added to the `keycodes` element to explicitly enable the QMK keycodes for lighting.
+Additionally, a lighting keycode module can be added to the `keycodes` element. New definitions should select the module that matches the QMK lighting subsystem.
 
 Example:
 
 ```json
-"keycodes": [ "qmk_lighting" ]
+"keycodes": [ "qmk_rgb_matrix_keycodes" ]
 ```
 
-The above additions are all that is required to enable the UI for controlling the stock lighting features of QMK.
+The explicit modules are `qmk_backlight_keycodes`, `qmk_rgblight_keycodes`, `qmk_rgb_matrix_keycodes`, and `qmk_backlight_rgblight_keycodes`. The older `qmk_lighting` value remains as a compatibility fallback and must not be combined with an explicit module. See [Keycodes](specification#keycodes) for protocol-specific behavior.
+
+The menu and matching keycode module are all that is required to expose the stock QMK lighting controls and keycodes.
 
 ### Menus
 
-The `menus` element is new in V3, and used to define the UI (aka. menus) in VIA. It replaces how lighting control is defined, and allows for defining other run-time parameters of a keyboard firmware.
+The `menus` element is new in V3 and is used to define the UI (also known as menus) in VIA. It replaces how lighting control is defined and allows other runtime parameters of keyboard firmware to be configured.
 
 For example, a keyboard definition for a keyboard that uses the QMK RGB Matrix feature would have the following `menus` element:
 
@@ -88,11 +92,17 @@ The complete documentation for custom UI is [here](custom_ui).
 "firmwareVersion": 0
 ```
 
-`firmwareVersion` is a way to version custom UI definitions. This new element ensures that VIA and the firmware are both using the same definition of custom UI (i.e. the `menus` element). If a feature is added or changed in the keyboard firmware, VIA will be able to detect when it is communicating with firmware built before this.
+`firmwareVersion` was introduced as metadata for versioning custom UI definitions. It defaults to `0` when omitted.
 
-Firmware authors can increment the `VIA_FIRMWARE_VERSION` symbol in the QMK source code and the `firmwareVersion` in the VIA keyboard definition at the same time. `firmwareVersion` is optional, and will default to 0 if not present, matching the default `VIA_FIRMWARE_VERSION` in QMK. As such, most firmware authors may never need to set this element if they never change the features of the firmware.
+Current VIA also reads `VIA_FIRMWARE_VERSION` directly from the connected keyboard. When custom controls differ between firmware releases, use the firmware value in a `showIf` expression:
 
-Note that `firmwareVersion` is different to the VIA protocol version (`VIA_PROTOCOL_VERSION` in QMK), which ensures that VIA and the firmware are both using the same definition of command IDs and command paramters. For example. the change from V2 to V3 definitions is an example of how the VIA protocol version is used. 
+```json
+"showIf": "{id_firmware_version} >= 5"
+```
+
+This lets one definition support old and new firmware safely instead of requiring another VID/PID or definition. See [Firmware-version conditions](custom_ui#firmware-version-conditions).
+
+`VIA_FIRMWARE_VERSION` is different from the VIA protocol version (`VIA_PROTOCOL_VERSION` in QMK). The protocol version describes the shared VIA command format; the keyboard firmware version describes revisions of one keyboard's features.
 
 ## QMK Changes for VIA V2 to V3
 
@@ -176,6 +186,6 @@ enum via_keyboard_value_id {
 };
 ```
 
-`id_firmware_version` is used to get the firmware version, see #Firmware Versioning. It returns `VIA_FIRMWARE_VERSION` to VIA, for use in ensuring a match between the VIA keyboard definition and the firmware's handling of custom UI (aka. the `menus` element).
+`id_firmware_version` returns `VIA_FIRMWARE_VERSION` to VIA. Current VIA also exposes it as `id_firmware_version` in custom-UI `showIf` expressions.
 
 `id_device_indication` is set by VIA to allow the device to indicate that it is being configured. This is a refactoring of how VIA V2 would cause a keyboard with RGB backlighting to flash on/off when it became the keyboard being configured, which was done by sending `id_lighting_set_value` commands. This feature was refactored to be device agnostic. The default handler `via_set_device_indication()` will toggle any enabled QMK lighting feature and/or trigger audio playback. It can be overridden and customized at the keyboard level.

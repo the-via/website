@@ -14,6 +14,6 @@ module.exports = {
       { "Custom UI": ["custom_ui", "built_in_menus"] },
     ],
     Appendix: ["supported_keyboards", "download_firmware"],
-    "VIA Version 3": ["v3_changes"],
+    "VIA Version 3": ["v3_changes", "post_v3_changes", "post_v3_examples"],
   },
 };

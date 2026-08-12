@@ -15,7 +15,7 @@
   "dependencies": {
     "@docusaurus/core": "^2.3.1",
     "@docusaurus/preset-classic": "^2.3.1",
-    "@the-via/reader": "^1.6.0",
+    "@the-via/reader": "^1.14.3",
     "classnames": "^2.3.2",
     "js-file-download": "^0.4.12",
     "json-stringify-pretty-compact": "^4.0.0",

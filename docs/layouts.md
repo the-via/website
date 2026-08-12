@@ -26,7 +26,7 @@ The KLE JSON should follow these rules:
 
 Note: The key colors used in the KLE will be used by VIA to map alphas/modifiers/accents to a color theme, thus all keys which are the "modifier" color in a standard keycap set should be set to `#aaaaaa`. Some color themes may have the same color for alphas and modifiers.
 
-## Switch Matrix Co-ordinates
+## Switch Matrix Coordinates
 
 The mapping from physical layout to switch matrix layout is defined by the top-left legend of the key, using `row,col` format.
 
@@ -36,7 +36,7 @@ Most `LAYOUT_*()` macros in QMK use some `row,col` naming convention so translat
 
 KLE Example:
 
-![Switch Matrix Co-ordinates](/img/switch_matrix_coordinates.png)
+![Switch Matrix Coordinates](/img/switch_matrix_coordinates.png)
 
 QMK Layout Macro Example:
 
@@ -51,30 +51,42 @@ QMK Layout Macro Example:
 
 ## Rotary Encoders
 
-You can setup your VIA layout to display rotary encorders right in the UI. To do this you need to a few things setup properly in QMK.
+VIA can display and remap rotary encoders directly in the keymap UI. The encoder hardware should be configured through QMK's data-driven `encoder` property in the keyboard's `info.json`:
 
-Required setup in QMK:
-  * Enable encoder maps as per QMK 
-  * Add ENCODER_ENABLE = yes to rules.mk
-  * Add ENCODER_MAP_ENABLE = yes to keymaps/via/rules.mk
-  * Add an encoder map to keymaps/via/keymap.c
-  * The encoder map should be defined for the same number of layers as configured for VIA (default 4)
-  * Add the encoder to the VIA keyboard definition
+```json
+{
+  "encoder": {
+    "enabled": true,
+    "rotary": [
+      {"pin_a": "B12", "pin_b": "B13", "resolution": 4}
+    ]
+  }
+}
+```
+
+The VIA keymap must additionally:
+
+* enable `ENCODER_MAP_ENABLE = yes` in its `rules.mk`
+* define an encoder map in `keymaps/via/keymap.c`
+* define the same number of encoder-map layers as `dynamic_keymap.layer_count` (four by default)
+* add each encoder to the VIA keyboard definition
+
+`ENCODER_MAP_ENABLE` is intentionally a keymap-level option. The older `ENCODER_ENABLE` and encoder pin defines should not be duplicated in the VIA keymap when the keyboard already provides them through `info.json`.
 
 ### Encoders without push switch (Just twist, no push)
 ![Just Encoder](/img/just-encoder.png)
 
-  Add a "key" to the KLE JSON with e0, e1, etc. as the center label. The number will match the encoder ID used in the encoder map.
+Add a "key" to the KLE JSON with `e0`, `e1`, etc. as the center label. The number matches the encoder index used in the encoder map.
 
 ### Rotary encoder with a push switch
 ![Encoder with Switch](/img/encoder-with-push.png)
 
-  Define the switch matrix co-ordinates like other switches and add e0, e1, etc. to the center label of the switch
+Define the switch matrix coordinates like other switches and add `e0`, `e1`, etc. to the center label of the switch.
 
 ### Optional Rotary Encoder (combined switch/rotary encoder footprint)
 ![Optional Encoder](/img/optional-encoder.png)
 
-  Use VIA Layout Options like other switches. VIA can render either a knob or switch or empty space.
+Use VIA layout options like other switches. VIA can render a knob, a switch, or empty space.
 
 ### Here's what it looks like
 ![Result](/img/result.png)
@@ -93,7 +105,7 @@ Each layout option is defined by a number, the first number in the bottom-right 
 
 The "default layout" (what is presented in VIA by default) is defined as all keys without the `option,choice` in the bottom-right label, and all keys which have `option,0` in the bottom-right label (i.e. the "default" choice for all the layout options). VIA will use the bounding box of all the key in the "default layout" as the extent of the "keyboard", so layout option choices can be positioned above, below, left or right of this bounding box.
 
-Layout option choices must all have the same coverage, i.e. they overlap exactly in shape, but can vary in keycap sizes and arrangement. Layout option choices must be aligned either vertically or horizontally with the "default" layout option. They must all contain the switch matrix co-ordinates in the top-left label. Note that setting the switch matrix co-ordinates may require testing real hardware. For example, the non-split (center) switch of a split shift or backspace may be connected in parallel to the switch to the left or right. One can put different keycodes in a split key scenarion and test which keycode event is sent when the center switch is pressed or shorted.
+Layout option choices must all have the same coverage, i.e. they overlap exactly in shape, but can vary in keycap sizes and arrangement. Layout option choices must be aligned either vertically or horizontally with the "default" layout option. They must all contain the switch matrix coordinates in the top-left label. Setting those coordinates may require testing real hardware. For example, the non-split center switch of a split Shift or Backspace may be connected in parallel to the switch on either side. Assign different keycodes to the candidate matrix positions and test which event is sent when the center switch is pressed or shorted.
 
 Layout options should be at the finest granularity possible. For example, ANSI/ISO should be defined as three separate layout options, ANSI/ISO Enter, Split Left Shift, Split Right Shift. 
 
@@ -110,7 +122,7 @@ This example defines the layout option "Split Backspace".
 It shows:
 
   * the 2U backspace legend is `0,0` meaning it belongs to layout option #0, layout option choice #0
-  * the 2U backspace is the default (because it is `-,0`)
+  * the 2U backspace is the default because it belongs to choice `0`
   * the 2U backspace is positioned as it should be relative to other keys that are constant, *because it is the default*.
   * the split backspace keys have legends `0,1` meaning they belong to layout option #0, layout option choice #1
   * the split backspace keys have the same bounding box (i.e. cover the same area) as the 2U backspace

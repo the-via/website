@@ -11,7 +11,7 @@ import Link from "@docusaurus/Link";
 
 The built-in menus of VIA (`Keymap`, `Layouts`, `Macros`, `Save + Load`) will be displayed depending on keyboard definition and firmware.
 
-The `menus` element is used to define more menus in VIA. It can contain **one or more** of the following built-in UI definitions:
+The `menus` element adds menus to VIA. It can contain **one or more** of the following built-in UI definitions:
 
 <ul>
   {Object.keys(commonMenus).map((key) => (
@@ -65,7 +65,7 @@ Similarly, combining built-in UI definitions with custom UI that has the same to
 
 ## Structure
 
-A custom UI definition (as a child element of `menu`) consists of a single top-level menu element with `label` and `content` elements.
+A custom UI definition (as a child element of `menus`) consists of a single top-level menu element with `label` and `content` elements.
 
 A top-level menu element must contain one or more sub-menu elements as an array in `content`.
 
@@ -125,13 +125,7 @@ For example, all custom UI defined for any kind of lighting should use a top-lev
 
 Other top-level menus should be similarly generalized, such as `Audio`, `Display`, `Knobs`, etc.
 
-Top-level menus will be displayed with an icon based on the `label`. The current list is:
-
-- `"Lighting"`
-- `"Audio"`
-- `"Display"`
-
-Top level menus with a `label` not in this list will be displayed with a generic icon.
+Top-level menus are assigned an icon from keywords in the `label`. Labels containing `light` or `rgb` use a lighting icon; `audio` or `sound` use an audio icon; and `display`, `oled`, or `lcd` use a display icon. Other labels use a generic microchip icon.
 
 In the case where a built-in definition requires some changes to match the firmware, the built-in definition can be inserted in place in the `menus` element and modified. In most cases, the default handlers in the firmware can be used.
 
@@ -141,7 +135,7 @@ Examples of this are:
 - Configuring the set of lighting effects (e.g. changing the array of string/number pairs)
 - Adding a new sub-menu and controls to match keyboard-level code which overrides the default behaviour (e.g. customized indicators)
 
-This is facilitated by the use of `channel_id` in the set/get custom value commands. See [#Channels](#channels)
+This is facilitated by the use of `channel_id` in the set/get custom value commands. See [Channel ID](#channel-id).
 
 ## UI Controls
 
@@ -192,10 +186,26 @@ Example:
 - `dropdown`
 - `color`
 - `keycode`
+- `label`
 
 `options` defines the possible values of the control (the numerical range, or string/integer values)
 
-`content` defines the binding of the control to the `channel_id` and `value_id` used in the VIA protocol. These values are preceeded by a `value_key` string that is used by VIA. The `value_key` should match the name of the enum value in the firmware for uniqueness and readability. It must be unique for all UI controls in a UI definition.
+`content` defines the binding of the control to the `channel_id` and `value_id` used in the VIA protocol. These values are preceded by a `value_key` string that is used by VIA. The `value_key` should match the name of the enum value in the firmware for uniqueness and readability. It must be unique for all UI controls in a UI definition.
+
+The general command form is:
+
+```json
+["value_key", channel_id, value_id, ...additional_arguments]
+```
+
+| Position | Meaning | Who defines it |
+| --- | --- | --- |
+| `value_key` | A unique string VIA uses to store, reference, and conditionally display the value. | Definition author |
+| `channel_id` | Routes the command to a feature handler. Custom keyboard values commonly use channel `0`. | Fixed by built-in QMK features; otherwise chosen by the firmware author |
+| `value_id` | Identifies the value within that channel. | Fixed by built-in QMK features; otherwise chosen by the firmware author |
+| `additional_arguments` | Optional addressing bytes such as an array index, layer, or slot. | Firmware author |
+
+Additional numeric arguments are optional. VIA preserves them when reading or writing the control and appends the new value after them for set commands. This supports array indexes, layers, or other firmware-defined addressing values.
 
 For example:
 
@@ -260,6 +270,38 @@ The range control is a slider that controls a numeric value. The `options` eleme
 }
 ```
 
+#### Relational constraints
+
+A range can constrain its value relative to another range. This is useful for paired values such as press and release thresholds that must maintain an ordering or minimum gap.
+
+```json
+{
+  "label": "Actuation",
+  "type": "range",
+  "options": [0, 255],
+  "content": ["id_actuation", 0, 10],
+  "constraints": [
+    {
+      "operator": ">=",
+      "reference": "id_release",
+      "offset": 5,
+      "onViolation": "push"
+    }
+  ]
+}
+```
+
+Each constraint supports:
+
+- `operator`: `<`, `<=`, `>`, or `>=`
+- `reference`: the other range's `value_key`, or its complete command tuple
+- `offset`: an optional positive or negative integer added to the referenced value
+- `onViolation`: `clamp` or `push`; the default is `clamp`
+
+`clamp` stops the value at the closest valid boundary. `push` first moves the referenced control to preserve the relationship; if that control reaches its own bounds, the manipulated value is clamped instead.
+
+Multiple constraints may be placed on one range. Constraints work with both one-byte and two-byte range values. VIA validates that referenced controls exist, full command references match their declaration, offsets are integers, and the declared ranges can satisfy the relationship.
+
 ### Dropdown Control
 
 The dropdown control is a drop-down menu of strings, which maps to an integer value. The `options` element defines the item labels and associated number.
@@ -320,6 +362,42 @@ The keycode control allows display and editing of a QMK keycode. Firmware writer
 ```
 
 Keycodes are 16-bit values, so the value data is two bytes. See [Handling 16-bit Values](#handling-16-bit-values)
+
+<a id="display-label"></a>
+
+### Static and Keyboard-Provided Display Labels
+
+The `label` type displays read-only text using the same value styling as a range control. It supports two `content` forms.
+
+#### Static label
+
+A one-element `content` array contains the text directly in the definition. VIA displays it without issuing a custom-value command:
+
+```json
+{
+  "label": "Information",
+  "type": "label",
+  "content": ["Device is ready"]
+}
+```
+
+#### Keyboard-provided label
+
+A custom-value command tuple tells VIA to read dynamic text from the keyboard:
+
+```json
+{
+  "label": "Board status",
+  "type": "label",
+  "content": ["id_board_status", 0, 2]
+}
+```
+
+The tuple has the same structure as other custom controls: `[value_key, channel_id, value_id, ...arguments]`. The keyboard must return null-terminated UTF-8 bytes in the custom-value response. This form is reread when VIA refreshes the matching value, including after a [board-initiated synchronization request](#board-initiated-custom-ui-synchronization).
+
+Both forms are display-only and do not send set or save commands.
+
+![Static and keyboard-provided VIA display labels](/img/post_v3/display-labels.jpg)
 
 ### Showing/Hiding Controls
 
@@ -393,11 +471,40 @@ For example, the following will only display the `Audacity` and `Tenacity` range
 
 The expression evaluator uses operators such as `==`, `!=`, `<`, `<=`, `>`, `>=`, `||`, `&&`, `!`, `(`, `)`. Values are referenced by enclosing their key string in `{` and `}`.
 
+#### Firmware-version conditions
+
+VIA also exposes the keyboard's 32-bit `VIA_FIRMWARE_VERSION` as `id_firmware_version` while evaluating V3 custom UI:
+
+```json
+{
+  "showIf": "{id_firmware_version} >= 5",
+  "label": "New firmware feature",
+  "type": "toggle",
+  "content": ["id_new_feature", 0, 24]
+}
+```
+
+The condition can be placed on an individual item, a conditional group, a submenu, or a top-level menu.
+
+- Hidden items and groups are not rendered.
+- A firmware-gated submenu remains listed but disabled and explains that the feature is unavailable for the connected firmware.
+- A top-level menu remains available and shows an unavailable-features message when its condition is false.
+
+VIA does not read commands from a branch whose condition refers only to `id_firmware_version` and evaluates false. This allows mutually exclusive firmware branches to reuse a `value_key` or numeric command ID safely. Keep definitions for every supported firmware generation in the JSON, and place the version condition high enough to cover every command whose meaning changed.
+
+Define the reported value in the VIA keymap's `config.h`:
+
+```c
+#define VIA_FIRMWARE_VERSION 5
+```
+
+The top-level JSON `firmwareVersion` property is not a substitute for conditional controls; current VIA uses the version reported by the connected firmware when evaluating `showIf`.
+
 ### Array Values
 
 Sometimes firmware has a set of the same type of values, for which enumerating each in an enum, and using a range of `value_id` values, is not elegant.
 
-In this situation, **one or more numbers** can be added after the `value_id` in the `content` element, These can be used for any purpose in the firmware, such as an index to an array.
+In this situation, **one or more numbers** can be added after the `value_id` in the `content` element. These can be used for any purpose in the firmware, such as an index into an array.
 
 Example:
 
@@ -473,6 +580,8 @@ enum via_buttglow_value {
 Thus, overriding `via_custom_value_command_kb()` in the keyboard level code allows firmware authors to write a command handler to set/get the values defined by the custom UI definition in VIA.
 
 In the simple case of implementing a few keyboard specific custom values, it is recommended to use a `channel_id` of `id_custom_channel = 0`, which won't conflict with the channels being handled in `via.c`, as these start with `1`. However, firmware authors could choose to use multiple `channel_id` values, to support multiple features.
+
+> **IDs on custom channel `0` are defined by the keyboard author.** The numeric `value_id` in a JSON `content` tuple must match the keyboard's custom enum, but it is not assigned or reserved by VIA. This applies equally to custom-menu controls, firmware-backed labels, and dynamic keyboard names. The numbers used throughout this documentation are examples. Built-in QMK menus are different because their channel and value IDs must match the fixed handlers in QMK and VIA.
 
 It is possible to combine the default command handlers for a QMK feature (using the default `channel_id`) with a command handler for a keyboard specific feature. For example, a firmware author could use the built-in UI for RGB Matrix on channel `id_qmk_rgb_matrix_channel = 4`, and implement `via_custom_value_command_kb()` to only handle commands on channel `id_custom_channel = 0`.
 
@@ -569,7 +678,7 @@ void buttglow_config_save(void)
 
 ### Saving Values
 
-The `id_custom_save` command is sent after one or more `id_custom_set_value` commands have been sent, and after a small delay. It is used to allow the firmware to defer writing to EEPROM and respond to set value commands quickly. This also reduces the number of redundant writes to EEPROM, especially when users are changing values quickly in VIA, like when using a color picker. The `channel_id` of the `id_custom_save` command will be the same value as used in the `id_custom_set_value` commands which preceeded it, thus a handler to write all current values to EEPROM for a given feature can be called and bound per channel.
+The `id_custom_save` command is sent after one or more `id_custom_set_value` commands have been sent, and after a small delay. It is used to allow the firmware to defer writing to EEPROM and respond to set value commands quickly. This also reduces the number of redundant writes to EEPROM, especially when users are changing values quickly in VIA, like when using a color picker. The `channel_id` of the `id_custom_save` command will be the same value as used in the preceding `id_custom_set_value` commands, allowing a handler to save all current values for a feature by channel.
 
 ### Handling 16-bit Values
 
@@ -642,3 +751,51 @@ void buttglow_config_set_value( uint8_t *data )
 ```
 
 See [Array Values](#array-values)
+
+<a id="refreshing-custom-ui-from-firmware"></a>
+
+## Board-Initiated Custom UI Synchronization
+
+Normally VIA reads custom-menu values when a keyboard connects and after a value is changed through the app. Firmware can also request a refresh when a value changes independently, such as after a board task completes or a hardware mode switch changes state.
+
+The synchronization flow is:
+
+1. The board changes one or more values independently of VIA.
+2. Firmware queues a full or targeted synchronization request.
+3. Firmware sends the request after the current VIA receive handler has returned.
+4. VIA waits for active HID commands, coalesces requests, and rereads the matching active controls.
+
+The firmware sends a versioned `UI_SYNC_REQUEST` report (`0x16`) through the existing VIA Raw HID interface. Version `0x01` supports three request types:
+
+| Type | Value | Payload |
+| --- | --- | --- |
+| Refresh all custom values | `0x00` | No targets |
+| Refresh channel/command pairs | `0x01` | Two bytes per target: channel ID, command ID |
+| Refresh command IDs | `0x02` | One command ID per target |
+
+The report begins with:
+
+```text
+[0x16, version, type, count, ...targets]
+```
+
+For example, this report asks VIA to refresh the author-defined command IDs `2` and `3` regardless of channel:
+
+```c
+uint8_t report[RAW_EPSIZE] = {0};
+report[0] = 0x16; // UI_SYNC_REQUEST
+report[1] = 0x01; // request format version
+report[2] = 0x02; // command-ID targets
+report[3] = 2;    // target count
+report[4] = 2;
+report[5] = 3;
+raw_hid_send(report, sizeof(report));
+```
+
+Send synchronization reports outside the VIA receive handler—for example, from `housekeeping_task_user()` after a short delay. This avoids sending a second Raw HID report while VIA is still processing the command that caused the change.
+
+Firmware implementations should coalesce pending requests, remove duplicate targets, keep the payload within `RAW_EPSIZE`, and send only from the master side of a split keyboard. A refresh-all request should take precedence over a pending selective refresh.
+
+VIA queues and coalesces requests for each device, waits for active HID commands to finish, and merges only the requested values into the current UI state. Unsupported request versions and types, and targets absent from the active definition, are ignored.
+
+A paired definition and deferred QMK implementation is available in [Board-initiated UI synchronization](post_v3_examples#board-initiated-ui-synchronization).
