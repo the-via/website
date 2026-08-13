@@ -65,6 +65,10 @@ V3 VIA definitions give designers the flexibility to create a custom UI to contr
 
 [See the full list of V3 definition changes](v3_changes)
 
+VIA has continued to add definition and firmware capabilities since this release. See [Changes Since VIA Version 3](post_v3_changes) for the current additions and migration guidance.
+
+The VIA web app is the supported way to access these current features. The existing official desktop application is deprecated and is planned to be replaced in the future; see [Web and desktop applications](post_v3_changes#web-and-desktop-applications).
+
 ## Discord
 
 [We have a new Discord server!](https://discord.gg/NStTR5YaPB)
